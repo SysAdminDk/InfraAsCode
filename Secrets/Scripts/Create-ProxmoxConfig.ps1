@@ -114,7 +114,16 @@ $updateButton.Location = New-Object System.Drawing.Point(330,165)
 $updateButton.Size = New-Object System.Drawing.Size(73,22)
 $updateButton.Text = 'Update'
 $updateButton.Add_Click({
-    
+
+    # Create SaveAs Dialog
+    $SaveDialog = New-Object System.Windows.Forms.SaveFileDialog
+    $SaveDialog.Title  = "Save configuration file"
+    $SaveDialog.Filter = "Config files (*.json)|*.json|All files (*.*)|*.*"
+    $SaveDialog.FileName = "Proxmox-Connection.json"
+    $SaveDialog.InitialDirectory = "$([Environment]::GetFolderPath("UserProfile"))\Downloads"
+
+    $SaveDialog.ShowDialog()
+
     # Create JSON file.
     [pscustomobject]@{
         DisplayName = $DisplayName.Text
@@ -124,7 +133,7 @@ $updateButton.Add_Click({
         Token = $PVEToken.Text
         Host = $PVEHost.Text
 
-    } | Convertto-Json | Out-File -FilePath "$PSScriptRoot\Proxmox-Connection.json" -Encoding utf8
+    } | Convertto-Json | Out-File -FilePath $SaveDialog.FileName -Encoding utf8
 
     # Close form.
     $Queryform.Close()
