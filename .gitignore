@@ -1,0 +1,5 @@
+Secrets/ProductKeys.json
+Secrets/Proxmox-Connection.json
+Secrets/SubscriptionData.json
+Secrets/GitHub-Connection.json
+ConfigFiles/JSON/*.json

@@ -1,0 +1,2606 @@
+﻿[
+    {
+        "Name":  "ADDS-01",
+        "Description":  "Active Directory Domain Services",
+        "DomainName":  null,
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-0B",
+                        "IPv4Address":  "10.36.0.11",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "8.8.8.8",
+                                           "8.8.4.4"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  "100"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "AD-Domain-Services",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "DNS",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "ADDS-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "ADDS-Tiering.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "ADDS-Hardening.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "ADDS-WBackup.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "ADDS-InitialUsers.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "ADDS-02",
+        "Description":  "Active Directory Domain Services",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-0C",
+                        "IPv4Address":  "10.36.0.12",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  "100"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "AD-Domain-Services",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "DNS",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "ADDS-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "ADDS-WBackup.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "ADDS-03",
+        "Description":  "Active Directory Domain Services",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-0D",
+                        "IPv4Address":  "10.36.0.13",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  "100"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "AD-Domain-Services",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "DNS",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "ADDS-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "ADDS-WBackup.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "ADCA-01",
+        "Description":  "Active Directory Certificate Services",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=CertificateAuthority,OU=Servers,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-0F",
+                        "IPv4Address":  "10.36.0.15",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "ADCS-Cert-Authority",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "ADCA-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AADC-01",
+        "Description":  "Microsoft Entra Connect Sync",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=EntraConnectSync,OU=Servers,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-11",
+                        "IPv4Address":  "10.36.0.17",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AADC-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AADC-02",
+        "Description":  "Microsoft Entra Connect Sync",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=EntraConnectSync,OU=Servers,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-12",
+                        "IPv4Address":  "10.36.0.18",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AADC-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AAPP-01",
+        "Description":  "Microsoft Entra Password Protection Proxy",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=EntraPasswordProtection,OU=Servers,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-13",
+                        "IPv4Address":  "10.36.0.19",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AAPP-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AAPP-02",
+        "Description":  "Microsoft Entra Password Protection Proxy",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=EntraPasswordProtection,OU=Servers,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-14",
+                        "IPv4Address":  "10.36.0.20",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AAPP-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-01",
+        "Description":  "Tier 0 Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-15",
+                        "IPv4Address":  "10.36.0.21",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "GPMC",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-Clustering",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-AD-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-Hyper-V-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-RDS-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-ADCS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-ADRMS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DHCP",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DNS-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DFS-Mgmt-Con",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-NPAS ",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-02",
+        "Description":  "Tier 0 Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=Tier0,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-16",
+                        "IPv4Address":  "10.36.0.22",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "GPMC",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-Clustering",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-AD-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-Hyper-V-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-RDS-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-ADCS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-ADRMS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DHCP",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DNS-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DFS-Mgmt-Con",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-NPAS ",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RDGW-01",
+        "Description":  "Remote Desktop Gateway",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopGateways,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-23",
+                        "IPv4Address":  "10.36.0.35",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "NPAS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RDS-Gateway",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RDGW-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RDGW-02",
+        "Description":  "Remote Desktop Gateway",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopGateways,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-24",
+                        "IPv4Address":  "10.36.0.36",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "NPAS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RDS-Gateway",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RDGW-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AMFA-01",
+        "Description":  "Remote Desktop Gateway, Network Policy Server, Entra multifactor authentication",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopMFA,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-27",
+                        "IPv4Address":  "10.36.0.39",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  {
+                      "name":  "NPAS",
+                      "status":  "pending"
+                  },
+        "Tasks":  [
+                      {
+                          "name":  "AMFA-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AMFA-02",
+        "Description":  "Remote Desktop Gateway, Network Policy Server, Entra multifactor authentication",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopMFA,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-28",
+                        "IPv4Address":  "10.36.0.40",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  {
+                      "name":  "NPAS",
+                      "status":  "pending"
+                  },
+        "Tasks":  [
+                      {
+                          "name":  "AMFA-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MEAP-01",
+        "Description":  "Microsoft Entra Application Proxy",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=AzureApplicationGateways,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-29",
+                        "IPv4Address":  "10.36.0.41",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "MEAP-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MEAP-02",
+        "Description":  "Microsoft Entra Application Proxy",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=AzureApplicationGateways,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2A",
+                        "IPv4Address":  "10.36.0.42",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "MEAP-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MSQL-01",
+        "Description":  "Microsoft SQL Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=DatabaseServers,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2B",
+                        "IPv4Address":  "10.36.0.43",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    "100",
+                                                    "20"
+                                                ]
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "MSQL-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MSQL-02",
+        "Description":  "Microsoft SQL Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=DatabaseServers,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2B",
+                        "IPv4Address":  "10.36.0.43",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    "100",
+                                                    "20"
+                                                ]
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-Connection-Broker",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MSQL-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RDDB-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MSQL-07",
+        "Description":  "Remote Desktop Connection Broker Database Server, Microsoft SQL Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopDatabase,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2B",
+                        "IPv4Address":  "10.36.0.43",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    "100",
+                                                    "20"
+                                                ]
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-Connection-Broker",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MSQL-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RDDB-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MSQL-08",
+        "Description":  "Remote Desktop Connection Broker Database Server, Microsoft SQL Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopDatabase,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2C",
+                        "IPv4Address":  "10.36.0.44",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MSQL-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RDDB-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RDCB-01",
+        "Description":  "Remote Desktop Connection Broker",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopConnectionBrokers,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2D",
+                        "IPv4Address":  "10.36.0.45",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RDCB-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RDCB-02",
+        "Description":  "Remote Desktop Connection Broker",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopConnectionBrokers,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2E",
+                        "IPv4Address":  "10.36.0.46",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RDCB-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RDLI-01",
+        "Description":  "Remote Desktop Licensing",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopLicensing,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-2F",
+                        "IPv4Address":  "10.36.0.47",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RDLI-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RDLI-02",
+        "Description":  "Remote Desktop Licensing",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=RemoteDesktopLicensing,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-30",
+                        "IPv4Address":  "10.36.0.48",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RDLI-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "DHCP-01",
+        "Description":  "Dynamic Host Configuration Protocol",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=EndpointManagementServices,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-37",
+                        "IPv4Address":  "10.36.0.55",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "DHCP-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "DHCP-02",
+        "Description":  "Dynamic Host Configuration Protocol",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=EndpointManagementServices,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-38",
+                        "IPv4Address":  "10.36.0.56",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "DHCP-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "NPAS-01",
+        "Description":  "Network Policy and Access Services, RADIUS server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=NPSRadiusBackend,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-39",
+                        "IPv4Address":  "10.36.0.57",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  {
+                      "name":  "NPAS",
+                      "status":  "pending"
+                  },
+        "Tasks":  [
+                      {
+                          "name":  "NPAS-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "NPAS-02",
+        "Description":  "Network Policy and Access Services, RADIUS server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=NPSRadiusBackend,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-3A",
+                        "IPv4Address":  "10.36.0.58",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  {
+                      "name":  "NPAS",
+                      "status":  "pending"
+                  },
+        "Tasks":  [
+                      {
+                          "name":  "NPAS-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RRAS-01",
+        "Description":  "Routing and Remote Access, Always On VPN",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=AOVpnBackend,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-3B",
+                        "IPv4Address":  "10.36.0.59",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RRAS-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "RRAS-02",
+        "Description":  "Routing and Remote Access, Always On VPN",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=AOVpnBackend,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-3C",
+                        "IPv4Address":  "10.36.0.60",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RoleToInstall",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "RRAS-02.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "FILE-01",
+        "Description":  "File and Storage Services",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=FileShareServices,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-33",
+                        "IPv4Address":  "10.36.0.51",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    "300",
+                                                    "300"
+                                                ]
+                                   }
+                     },
+        "Roles":  {
+                      "name":  "FS-FileServer",
+                      "status":  "pending"
+                  },
+        "Tasks":  [
+                      {
+                          "name":  "FILE-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "FILE-02",
+        "Description":  "File and Storage Services",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=FileShareServices,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-34",
+                        "IPv4Address":  "10.36.0.52",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "FILE-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "DFSN-01",
+        "Description":  "Distributed File System (DFS) Namespace \u0026 Replication",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=FileShareServices,OU=Servers,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-35",
+                        "IPv4Address":  "10.36.0.53",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "DFS Namespaces",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "DFSR-01.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-11",
+        "Description":  "Tier 1 Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-17",
+                        "IPv4Address":  "10.36.0.23",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "GPMC",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-Clustering",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-AD-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-RDS-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-ADRMS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DHCP",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DNS-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DFS-Mgmt-Con",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-NPAS ",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-12",
+        "Description":  "Tier 1 Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-18",
+                        "IPv4Address":  "10.36.0.24",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  4,
+                         "MinMemory":  2,
+                         "MaxMemory":  8,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "GPMC",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-Clustering",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-AD-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-RDS-Tools",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-ADRMS",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DHCP",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DNS-Server",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-DFS-Mgmt-Con",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "RSAT-NPAS ",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-0x.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-13L",
+        "Description":  "Tier 1 Limited Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStationsLimited,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-19",
+                        "IPv4Address":  "10.36.0.25",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-13L.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-14L",
+        "Description":  "Tier 1 Limited Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStationsLimited,OU=Tier1,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-1A",
+                        "IPv4Address":  "10.36.0.26",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-14L.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-21",
+        "Description":  "Tier 2 Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=Tier2,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-1B",
+                        "IPv4Address":  "10.36.0.27",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-21.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-22",
+        "Description":  "Tier 2 Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=Tier2,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-1C",
+                        "IPv4Address":  "10.36.0.28",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-22.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-23L",
+        "Description":  "Tier 2 Limited Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStationsLimited,OU=Tier2,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-1D",
+                        "IPv4Address":  "10.36.0.29",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-23L.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-24L",
+        "Description":  "Tier 2 Limited Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStationsLimited,OU=Tier2,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-1E",
+                        "IPv4Address":  "10.36.0.30",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-24L.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-91",
+        "Description":  "Tier Endpoint Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=TierEndpoints,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-1F",
+                        "IPv4Address":  "10.36.0.31",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-91.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "MGMT-92",
+        "Description":  "Tier Endpoint Management / JumpServer",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  "OU=JumpStations,OU=TierEndpoints,OU=Admin",
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-20",
+                        "IPv4Address":  "10.36.0.32",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  1,
+                         "CPUCores":  2,
+                         "MinMemory":  2,
+                         "MaxMemory":  4,
+                         "Disks":  {
+                                       "System":  "50"
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "RDS-RD-Server",
+                          "status":  "pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "MGMT-92.ps1",
+                          "status":  "pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "HPV-NODE-01",
+        "Description":  "Fabric Hyper-V Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-D3",
+                        "IPv4Address":  "10.36.0.211",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  64,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "Hyper-V",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "RSAT-Hyper-V-Tools",
+                          "status":  "Pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "HyperV-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "HPV-NODE-02",
+        "Description":  "Fabric Hyper-V Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-D4",
+                        "IPv4Address":  "10.36.0.212",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  64,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  [
+                      {
+                          "name":  "Hyper-V",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "RSAT-Hyper-V-Tools",
+                          "status":  "Pending"
+                      }
+                  ],
+        "Tasks":  [
+                      {
+                          "name":  "HyperV-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AZL-NODE-01",
+        "Description":  "Azure Local Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-DD",
+                        "IPv4Address":  "10.36.0.221",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  256,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500,
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AZL-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AZL-NODE-02",
+        "Description":  "Azure Local Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-DE",
+                        "IPv4Address":  "10.36.0.222",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  256,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500,
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AZL-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AZL-NODE-03",
+        "Description":  "Azure Local Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-DF",
+                        "IPv4Address":  "10.36.0.223",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  256,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500,
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AZL-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AZL-NODE-04",
+        "Description":  "Azure Local Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-E0",
+                        "IPv4Address":  "10.36.0.224",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  256,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500,
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AZL-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    },
+    {
+        "Name":  "AZL-NODE-05",
+        "Description":  "Azure Local Server",
+        "DomainName":  "Sub.Domain.Tld",
+        "JoinOptions":  {
+                            "UserDomain":  "Sub",
+                            "UserDNSDomain":  "Sub.Domain.Tld",
+                            "OrganizationalUnit":  null,
+                            "Username":  "DomainJoin",
+                            "Password":  "RandomPasswordGennerated"
+                        },
+        "Network":  {
+                        "PhysicalAddress":  "BC-24-0A-24-00-E1",
+                        "IPv4Address":  "10.36.0.225",
+                        "SubnetMask":  "255.255.255.0",
+                        "DefaultGateway":  "10.36.0.1",
+                        "DNSServers":  [
+                                           "10.36.0.11",
+                                           "10.36.0.12",
+                                           "10.36.0.13"
+                                       ]
+                    },
+        "Hardware":  {
+                         "CPUSockets":  2,
+                         "CPUCores":  12,
+                         "MinMemory":  8,
+                         "MaxMemory":  256,
+                         "Disks":  {
+                                       "System":  "50",
+                                       "Data":  [
+                                                    500,
+                                                    500,
+                                                    500,
+                                                    500
+                                                ]
+                                   }
+                     },
+        "Roles":  "",
+        "Tasks":  [
+                      {
+                          "name":  "AZL-Prep.ps1",
+                          "status":  "Pending"
+                      },
+                      {
+                          "name":  "Cleanup.ps1",
+                          "status":  "Pending"
+                      }
+                  ]
+    }
+]
