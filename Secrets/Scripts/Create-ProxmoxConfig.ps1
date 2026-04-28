@@ -112,7 +112,7 @@ $Queryform.Controls.Add($PVEHost)
 $updateButton = New-Object System.Windows.Forms.Button
 $updateButton.Location = New-Object System.Drawing.Point(330,165)
 $updateButton.Size = New-Object System.Drawing.Size(73,22)
-$updateButton.Text = 'Update'
+$updateButton.Text = 'Save'
 $updateButton.Add_Click({
 
     # Create SaveAs Dialog
