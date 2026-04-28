@@ -1,0 +1,12 @@
+[
+    {
+        "Name":  "Admin File Share RW",
+        "SubPath":  "OU=Groups,OU=Tier0",
+        "Description":  "Read/Write access to IT Admin Share"
+    },
+    {
+        "Name":  "Admin File Share RO",
+        "SubPath":  "OU=Groups,OU=Tier0",
+        "Description":  "Read only access to IT Admin Share"
+    }
+]

@@ -1,0 +1,50 @@
+Server Role Definitions
+
+Roles should be 3–4 characters where possible.
+Clarity and recognizability take priority over strict length.
+
+Core Roles:
+
+ADDS  = Active Directory Domain Services (Domain Controller)
+AADC  = Entra Connect (Azure AD Connect)
+ECS   = Entra Cloud Sync
+ADFS  = Active Directory Federation Services
+ADCS  = Active Directory Certificate Services
+EPPP  = Entra Password Protection Proxy
+
+Database:
+
+MSQL  = Microsoft SQL Server
+OSQL  = Oracle Database
+PSQL  = Postgres Database
+MDB   = MongoDB
+
+Remote Desktop Services:
+
+RDSH  = Remote Desktop Session Host
+RDGW  = Remote Desktop Gateway
+RDCB  = Remote Desktop Connection Broker
+RDWB  = Remote Desktop Web Access
+RDLS  = Remote Desktop Licensing Server
+
+Infrastructure:
+
+FILE  = File Server
+MGMT  = Management / Jump Server
+WSUS  = Windows Update Services
+SYNC  = Generic sync service (only if no specific role applies)
+RPH   = Robotic Process Automation / Orchestrator
+AUTO  = Automation / Scheduled Tasks / Orchestration
+EAP   = Microsoft Entra Application Proxy
+
+Applications:
+
+APP   = Application Server
+WEB   = Web Server
+API   = API Server
+
+Operations:
+
+MON   = Monitoring (SCOM, etc.)
+LOG   = Logging (SIEM forwarder, log collector)
+

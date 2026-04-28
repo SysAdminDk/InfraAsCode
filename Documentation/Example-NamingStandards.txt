@@ -1,0 +1,189 @@
+Object Type: User (Standard)
+
+UPN:
+<firstname>.<lastname>@<domain>.<tld>
+
+Example:
+jan.kristensen@secinfra.com
+
+sAMAccountName: (UserID)
+<FirstInitial><LastNamePrefix>
+
+Constraints:
+- FirstInitial: First letter of first name
+- LastNamePrefix: 3-5 letters of last name
+- Ensure all uppercase
+- Max length: 6 characters
+
+Collision handling:
+1. Extend lastname prefix
+2. Append numeric value
+
+Restricted names:
+- Usernames must be checked against a restricted word list
+- If matched, alternative pattern must be used
+
+Exceptions:
+- Allowed for:
+  - Offensive or inappropriate names
+  - Unresolvable conflicts
+- Must be approved and documented
+
+Examples:
+- JKRIS
+- JKRIST
+- JKRIS1
+
+Optional, not optimal.
+First letter of first name
+First letter of last name
+And random number, license plate style.
+- JK020521
+
+
+# ---------------------------------------------
+
+
+Object Type: Group
+
+Pattern:
+<Type>-<Scope>-<Resource>-<Permission>
+
+Constraints:
+
+- Type:
+  SG   = Security Group
+  ROLE = Role-based access group
+  M365 = Microsoft 365 group
+
+- Scope:
+  GG = Global Group
+  DL = Domain Local
+
+- Resource:
+  Identifier of system or service
+  Format: <Site>-<System>-<Component>
+  Example: CPH-FS01-Share, CPH-SQL01-DB
+
+- Permission:
+  RO  = Read Only
+  RW  = Read/Write
+  ADM = Administrative access
+
+- Uniqueness:
+  Must be unique within domain
+
+Examples:
+- SG-GG-CPH-FS01-RO
+- SG-GG-CPH-FS01-RW
+- SG-DL-CPH-SQL01-ADM
+- ROLE-CP-ADMIN
+- ROLE-MP-SERVER-OPS
+
+
+# ---------------------------------------------
+
+
+Object Type: Privileged Users
+
+Pattern:
+<AccessPlane>-<UserID>
+
+Constraints:
+- Plane:
+  CP = Control Plane (Identity, AD, Entra)
+  MP = Management Plane (Server / Platform administration)
+  DP = Data Plane (Application / Data access)
+
+- UserID:
+  Based on standard user ID (e.g., JKRIST)
+
+- Purpose:
+  Must be used only for privileged access
+
+Examples:
+- CP-JKRIST
+- MP-JKRIST
+- DP-JKRIST
+
+
+# ---------------------------------------------
+
+
+Object Type: Non Human accounts / Service Accounts
+
+Pattern:
+<Prefix>-<Site>-<Plane>-<App>-<Instance>
+<Prefix>-<Plane>-<App>-<Instance>
+
+Constraints:
+- Prefix:
+  SVC, indicating service/machine account
+
+- Site: (Maybee)
+  3-letter geographic location
+  Example: CPH, AAL
+
+- Plane:
+  CP = Control Plane (Identity, AD, Entra)
+  MP = Management Plane (Server / Platform administration)
+  DP = Data Plane (Application / Data access)
+
+- App:
+  3-letter application/service identifier (SQL, WEB, APP)
+
+- Instance:
+  1-digit numeric sequence (1, 2)
+
+- Uniqueness:
+  Must be unique within domain
+
+- Rule:
+  All service and gMSA account names must be ≤15 characters (excluding trailing $)
+
+
+Examples:
+svc-CPH-MP-SQL1
+
+
+# --------------------------------------
+
+
+Object Type: Server
+
+Pattern:
+<Site>-<Hosting>-<Role>-<Instance>
+
+Constraints:
+- Site:
+  3-letter geographic location
+  Example: CPH, AAL, 
+
+- Role:
+  Predefined functional role ( Lookup in definition )
+  Examples: AADC, ADC, SQL, WEB, APP
+
+- Instance:
+  2-digit numeric sequence
+  Example: 01, 02
+
+- Length:
+  Must not exceed 15 characters
+
+- Uniqueness:
+  Must be unique within the domain
+
+Examples:
+- CPH-DC1-ADC-01
+- AAL-DC1-ADC-01
+- LOC-DC2-SQL-02
+  123456789012345
+# ------------------------------------------
+
+
+
+
+
+
+
+

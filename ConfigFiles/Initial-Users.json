@@ -1,0 +1,28 @@
+[
+    {
+        "FirstName":  "Jan",
+        "LastName":  "Kristensen",
+        "Access":  {
+                       "T0",
+                       "T1",
+                       "T2",
+                       "TE"
+                   }
+    },
+    {
+        "FirstName":  "Homer",
+        "LastName":  "Simpson",
+        "Access":  {
+                       "T1",
+                       "TE"
+                   }
+    },
+    {
+        "FirstName":  "Marjorie Bouvier",
+        "LastName":  "Simpson",
+        "Access":  {
+                       "T1",
+                       "TE"
+                   }
+    }
+]  
