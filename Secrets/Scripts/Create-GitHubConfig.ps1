@@ -57,14 +57,23 @@ $Queryform.Controls.Add($RepoToken)
 $updateButton = New-Object System.Windows.Forms.Button
 $updateButton.Location = New-Object System.Drawing.Point(330,65)
 $updateButton.Size = New-Object System.Drawing.Size(73,22)
-$updateButton.Text = 'Update'
+$updateButton.Text = 'Save'
 $updateButton.Add_Click({
     
+    # Create SaveAs Dialog
+    $SaveDialog = New-Object System.Windows.Forms.SaveFileDialog
+    $SaveDialog.Title  = "Save configuration file"
+    $SaveDialog.Filter = "Config files (*.json)|*.json|All files (*.*)|*.*"
+    $SaveDialog.FileName = "GitHub-Connection.json"
+    $SaveDialog.InitialDirectory = "$([Environment]::GetFolderPath("UserProfile"))\Downloads"
+
+    $SaveDialog.ShowDialog()
+
     # Create JSON file.
     [pscustomobject]@{
         Url = $RepoUrl.Text
         Token = $RepoToken.Text
-    } | Convertto-Json | Out-File -FilePath "$PSScriptRoot\GitHub-Connection.json" -Encoding utf8
+    } | Convertto-Json | Out-File -FilePath $SaveDialog.FileName -Encoding utf8
     
     # Close form.
     $Queryform.Close()
