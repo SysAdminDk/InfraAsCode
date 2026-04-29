@@ -37,10 +37,25 @@ Get-ChildItem -Path "$RootPath\Functions" | ForEach-Object { Import-Module -Name
 
 # Connect to PVE Cluster
 # ------------------------------------------------------------
-$PVESecret = Get-Content "$RootPath\Proxmox-Connection.json" | Convertfrom-Json
-if ($PVESecret.Count -gt 1) {
-    $PVESecret = $PVESecret | Out-GridView -Title "Select Master Node" -OutputMode Single
+if (-NOT (Test-Path -Path "$RootPath\Proxmox-Connection.json")) {
+
+    Add-Type -AssemblyName System.Windows.Forms
+
+    $FileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $FileDialog.InitialDirectory = $RootPath
+    $FileDialog.Filter = "JSON files (*.json)|*.json"
+    $FileDialog.Title  = "Select file"
+
+    if ($FileDialog.ShowDialog() -eq "OK") {
+        $PVESecret = Get-Content -Path $FileDialog.FileName | ConvertFrom-Json
+    }
+    else {
+        Throw "No file selected"
+    }
+} else {
+    $PVESecret = Get-Content -Path "$RootPath\Proxmox-Connection.json" | Convertfrom-Json
 }
+
 $PVEConnect = PVE-Connect -Authkey "$($PVESecret.User)!$($PVESecret.TokenID)=$($PVESecret.Token)" -Hostaddr $($PVESecret.Host)
 
 
@@ -72,27 +87,27 @@ $TemplateID = Get-PVENextID -ProxmoxAPI $($PVEConnect.PVEAPI) -Headers $($PVECon
 
 # Default Template Configuration
 # ------------------------------------------------------------
-$Body = "node=$($MasterID.Node)"
-$Body += "&vmid=$TemplateID"
-$Body += "&name=$VMName"
-$Body += "&bios=ovmf"
-$Body += "&cpu=host"
-$Body += "&ostype=win11"
-$Body += "&machine=pc-q35-9.0"
-$Body += "&tpmstate0=$([uri]::EscapeDataString("$($PVELocation.storage):1,size=4M,version=v2.0"))"
-$Body += "&efidisk0=$([uri]::EscapeDataString("$($PVELocation.storage):1,efitype=4m,format=raw,pre-enrolled-keys=1"))"
-$Body += "&net0=$([uri]::EscapeDataString("virtio,bridge=$($PVELocation.Interface),firewall=1"))"
-$Body += "&boot=$([uri]::EscapeDataString("order=net0"))"
-$Body += "&scsihw=virtio-scsi-single"
-$Body += "&memory=$Memory"
-$Body += "&balloon=2048"
-$Body += "&cores=$Cores"
-$Body += "&scsi0=$([uri]::EscapeDataString("$($PVELocation.storage):$($OSDisk),format=raw"))"
+$CreateVM = "node=$($MasterID.Node)"
+$CreateVM += "&vmid=$TemplateID"
+$CreateVM += "&name=$VMName"
+$CreateVM += "&bios=ovmf"
+$CreateVM += "&cpu=host"
+$CreateVM += "&ostype=win11"
+$CreateVM += "&machine=pc-q35-9.0"
+$CreateVM += "&tpmstate0=$([uri]::EscapeDataString("$($PVELocation.storage):1,size=4M,version=v2.0"))"
+$CreateVM += "&efidisk0=$([uri]::EscapeDataString("$($PVELocation.storage):1,efitype=4m,format=raw,pre-enrolled-keys=1"))"
+$CreateVM += "&net0=$([uri]::EscapeDataString("virtio,bridge=$($PVELocation.Interface),firewall=1"))"
+$CreateVM += "&boot=$([uri]::EscapeDataString("order=net0"))"
+$CreateVM += "&scsihw=virtio-scsi-single"
+$CreateVM += "&memory=$Memory"
+$CreateVM += "&balloon=2048"
+$CreateVM += "&cores=$Cores"
+#$CreateVM += "&scsi0=$([uri]::EscapeDataString("$($PVELocation.storage):$($OSDisk),format=raw"))"
 
 
 # Create the Template VM
 # ------------------------------------------------------------
-$VMCreate = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/" -Body $Body -Method POST -Headers $($PVEConnect.Headers) -Verbose:$false
+$VMCreate = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/" -Body $CreateVM -Method POST -Headers $($PVEConnect.Headers) -Verbose:$false
 Start-PVEWait -ProxmoxAPI $($PVEConnect.PVEAPI) -Headers $PVEConnect.Headers -node $($MasterID.Node) -taskid $VMCreate.data
 
 
@@ -103,9 +118,14 @@ Start-PVEWait -ProxmoxAPI $($PVEConnect.PVEAPI) -Headers $PVEConnect.Headers -no
 #>
 
 
-# Move OS disk to THIS server.
-# ------------------------------------------------------------
-$TmpDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $TemplateID -TargetVM $MasterID.VmID -Wait
+## Move OS disk to THIS server.
+## ------------------------------------------------------------
+#$TmpDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $TemplateID -TargetVM $MasterID.VmID -Wait
+# Create OS drive on THIS VM.
+$DiskId = Get-PVENextDiskID -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -VMID $MasterID.VmID
+
+$Null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Body "$DiskId=$([uri]::EscapeDataString("$($PVELocation.Storage):$OSDisk"))" -Method Post -Headers $PVEConnect.Headers -Verbose:$false
+
 
 
 # Pause 5 sec, need PnP to work
@@ -274,7 +294,8 @@ if ($null -eq $VHDDrive) {
 
 # Move Disk to template.
 # ------------------------------------------------------------
-$OrgDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $MasterID.VmID -TargetVM $TemplateID -SourceDisk $TmpDiskID -Wait
+#$OrgDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $MasterID.VmID -TargetVM $TemplateID -SourceDisk $TmpDiskID -Wait
+$OrgDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $MasterID.VmID -TargetVM $TemplateID -SourceDisk $DiskId -Wait
 
 
 # Add virtio0 to boot..
