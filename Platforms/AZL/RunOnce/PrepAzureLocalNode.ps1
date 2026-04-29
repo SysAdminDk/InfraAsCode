@@ -196,7 +196,7 @@ $CurrentIP = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $Interface.ifI
 # ------------------------------------------------------------
 if (!((gwmi win32_computersystem).partofdomain)) {
     #$NewPassword = $(-join ((48..57) + (65..90) + (97..122) | Get-Random -Count 15 | ForEach-Object {[char]$_}))
-    $NewPassword = "Dharma05052023.!!"
+    $NewPassword = "P@ssw0rd2025.!!"
     $SecurePassword = ConvertTo-SecureString -string $NewPassword -AsPlainText -Force
     Set-LocalUser -Name Administrator -Password $SecurePassword
 
