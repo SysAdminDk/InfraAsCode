@@ -19,9 +19,9 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
     $RootPath  = "C:\Scripts"
 }
 
-$DefaultNode     = "NUC01"
-$DefaultSwitch   = "vmbr0"
-$DefaultStorage  = "VMdata"
+
+# Default Variables
+# ------------------------------------------------------------
 $DefaultTemplate = "2025-Standard"
 $PVESecret   = Get-Content -Path "$RootPath\Proxmox-Connection.json" | Convertfrom-Json
 
@@ -49,24 +49,33 @@ Get-ChildItem -Path "$RootPath\Functions" | ForEach-Object { Import-Module -Name
 $PVEConnect = PVE-Connect -Authkey "$($PVESecret.User)!$($PVESecret.TokenID)=$($PVESecret.Token)" -Hostaddr $($PVESecret.Host)
 
 
+# Get Id of Deployment server....
+# ------------------------------------------------------------
+$MasterID = Get-PVEServerID -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -ServerName $ENV:Computername
+
+
 # Get information required to create the template (VM)
 # ------------------------------------------------------------
-$PVELocation = Get-PVELocation -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -IncludeNode NUC01
-#$PVELocation = [PSCustomObject]@{
-#    "Name"      = $DefaultNode;
-#    "Storage"   = $DefaultStorage;
-#    "Interface" = $DefaultSwitch
-#}
-
+$PVELocation = Get-PVELocation -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -IncludeNode $MasterID.Node | Select-Object Name,Storage,Interface
+<#
+# Defaults.
+$PVELocation = [PSCustomObject]@{
+    "Name"      = "NUC01"
+    "Storage"   = "VMdata"
+    "Interface" = "vmbr0"
+}
+#>
 
 # Find all templates
 # ------------------------------------------------------------
 $Template = Get-PVETemplates -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers | Where {$_.name -eq $DefaultTemplate}
-#$Template = [PSCustomObject]@{
-#    "VmID" = "99999901";
-#    "Name" = "2025-Standard";
-#    "Node" = "NUC01"
-#}
+<#
+$Template = [PSCustomObject]@{
+    "VmID" = "99999901";
+    "Name" = "2025-Standard";
+    "Node" = "NUC01"
+}
+#>
 
 
 # Get VM list from PVE.
@@ -79,7 +88,7 @@ $VMMacAddresses = $AllVMIDs | Foreach {
 }
 
 $VMsToCreate = (Compare-Object -ReferenceObject $VMMacAddresses -DifferenceObject $JsonFiles | Where-Object SideIndicator -eq "=>").InputObject
-$VMsToCreate.Count
+
 
 Foreach ($MACAddress in $VMsToCreate) {
     $URL = ($Response.links.href | Where {$_ -like "*$($MACAddress)*"})
