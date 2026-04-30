@@ -28,7 +28,7 @@ Import-Module -Name "$RootPath\Functions\IP2Mac.ps1"
 
 # Import master config
 # ------------------------------------------------------------
-if (-NOT (Test-Path -Path "$RootPath\MasterServerConfig.json")) {
+if (-NOT (Test-Path -Path "$JSONRoot\MasterServerConfig.json")) {
 
     Add-Type -AssemblyName System.Windows.Forms
 
@@ -44,7 +44,7 @@ if (-NOT (Test-Path -Path "$RootPath\MasterServerConfig.json")) {
         Throw "No file selected"
     }
 } else {
-    $MasterConfig  = Get-Content "$RootPath\MasterServerConfig.json" | ConvertFrom-Json
+    $MasterConfig  = Get-Content "$JSONRoot\MasterServerConfig.json" | ConvertFrom-Json
 }
 
 
@@ -55,14 +55,16 @@ $ExistingServers = (Get-ChildItem -Path "$JSONRoot\JSON" -Filter "*.json" | % { 
 
 $SelectedDomain = $ExistingServers.JoinOptions.UserDNSDomain | Select-Object -Unique | Out-GridView -Title "Select AD domain where to join the server" -OutputMode Single
 $DomainServers = $ExistingServers | where {$_.JoinOptions.UserDNSDomain -eq $SelectedDomain}
-
+if ($null -eq $DomainServers) {
+    Throw "No Active Directory domains have been created, use C:\Scripts\Tools\Create-VMDomain.ps1 to create."
+}
 
 # Select server type to add
 # ------------------------------------------------------------
-$SelectedServers = $MasterConfig.name | Where {$_ -notlike "*NODE*" -and $_ -NotIn $DomainServers.Name} | Out-GridView -Title "Select server type to add to selected domain" -OutputMode Multiple
+$SelectedServers = $MasterConfig | Select-Object Name,Description | Where {$_.Name -notlike "*NODE*" -and $_.Name -NotIn $DomainServers.Name} | Out-GridView -Title "Select servers to add to selected domain" -OutputMode Multiple
 
 
-Foreach ($Server in $SelectedServers) {
+Foreach ($Server in $SelectedServers.Name) {
 
     $ServerData = $MasterConfig | Where {$_.Name -eq $Server}
 
@@ -90,5 +92,9 @@ Foreach ($Server in $SelectedServers) {
     $ServerData.JoinOptions.UserDomain    = $DomainServers[0].JoinOptions.UserDomain
     $ServerData.JoinOptions.Password      = $DomainServers[0].JoinOptions.Password
 
-    $ServerData | ConvertTo-Json -Depth 5 | Out-File -FilePath "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json" -Encoding utf8
+    if (-NOT (Test-Path -Path "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json")) {
+        $ServerData | ConvertTo-Json -Depth 5 | Out-File -FilePath "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json" -Encoding utf8
+    } else {
+        Write-Warning "The server $($ServerData.Name).$($ServerData.JoinOptions.UserDNSDomain) already exist"
+    }
 }
