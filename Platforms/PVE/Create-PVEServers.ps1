@@ -90,12 +90,12 @@ $VMMacAddresses = $AllVMIDs | Foreach {
 $VMsToCreate = (Compare-Object -ReferenceObject $VMMacAddresses -DifferenceObject $JsonFiles | Where-Object SideIndicator -eq "=>").InputObject
 
 
-Foreach ($MACAddress in $VMsToCreate) {
-    $URL = ($Response.links.href | Where {$_ -like "*$($MACAddress)*"})
+Foreach ($ConfigFile in $VMsToCreate) {
+    $URL = ($Response.links.href | Where {$_ -like "*$($ConfigFile)*"})
 
-    $ServerRawData = Invoke-RestMethod -Uri "http://localhost/$URL" -UseBasicParsing -OutFile "$($ENV:Temp)\$MACAddress.json"
-    $ServerData = Get-Content -Path "$($ENV:Temp)\$MACAddress.json" | ConvertFrom-Json
-    Remove-Item -Path "$($ENV:Temp)\$MACAddress.json"
+    Invoke-RestMethod -Uri "http://localhost/$URL" -UseBasicParsing -OutFile "$($ENV:Temp)\$ConfigFile.json"
+    $ServerData = Get-Content -Path "$($ENV:Temp)\$ConfigFile.json" | ConvertFrom-Json
+    Remove-Item -Path "$($ENV:Temp)\$ConfigFile.json"
 
     $FQDN = (@($ServerData.Name,$ServerData.JoinOptions.UserDNSDomain) -join("."))
     $VLAN = ($ServerData.Network.IPv4Address -split("\."))[-2]
@@ -106,7 +106,7 @@ Foreach ($MACAddress in $VMsToCreate) {
         $ServerDisks += $ServerData.Hardware.Disks.Data | ForEach-Object { [int]$_ }
     }
 
-    New-PVEServer -FQDN $FQDN -NetAdapterMac $ServerData.Network.PhysicalAddress -vlan $VLAN `
+    New-PVEServer -FQDN $FQDN -NetAdapterMac $MacAddress -vlan $VLAN `
         -Disks $ServerDisks -VMMemory $ServerData.Hardware.MaxMemory -VMCores $ServerData.Hardware.CPUCores `
         -PVEConnection $PVEConnect -PVELocation $PVELocation -PVETemplate $Template -Verbose
 
