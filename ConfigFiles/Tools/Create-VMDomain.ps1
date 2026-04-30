@@ -23,12 +23,12 @@ if (-NOT (Test-Path -Path "$JSONRoot\JSON")) {
 
 # Import the functions.
 # ------------------------------------------------------------
-#Import-Module -Name "$RootPath\Functions\IP2Mac.ps1"
+Import-Module -Name "$RootPath\Functions\IP2Mac.ps1"
 
 
 # Import master config
 # ------------------------------------------------------------
-if (-NOT (Test-Path -Path "$RootPath\MasterServerConfig.json")) {
+if (-NOT (Test-Path -Path "$JSONRoot\MasterServerConfig.json")) {
 
     Add-Type -AssemblyName System.Windows.Forms
 
@@ -44,7 +44,7 @@ if (-NOT (Test-Path -Path "$RootPath\MasterServerConfig.json")) {
         Throw "No file selected"
     }
 } else {
-    $MasterConfig  = Get-Content "$RootPath\MasterServerConfig.json" | ConvertFrom-Json
+    $MasterConfig  = Get-Content "$JSONRoot\MasterServerConfig.json" | ConvertFrom-Json
 }
 
 
@@ -58,11 +58,10 @@ $NewJoinPassword = (-join ((48..57) + (65..90) + (97..122) | Get-Random -Count 2
 # Select server type to add
 # ------------------------------------------------------------
 $SelectedServers  = @()
-$SelectedServers += ($MasterConfig | Where {$_.Name -eq "ADDS-01"}).Name
-$SelectedServers += $MasterConfig.name | Where {$_ -notlike "*NODE*" -and $_ -NotIn $PDCData.Name} | Out-GridView -Title "Select server type to add to selected domain" -OutputMode Multiple
+$SelectedServers += $MasterConfig | Select-Object Name,Description | Where {$_.Name -notlike "*NODE*"} | Out-GridView -Title "Select servers to add to new domain" -OutputMode Multiple
 
 
-Foreach ($Server in $SelectedServers) {
+Foreach ($Server in $SelectedServers.Name) {
 
     $ServerData = $MasterConfig | Where {$_.Name -eq $Server}
 
@@ -90,5 +89,30 @@ Foreach ($Server in $SelectedServers) {
     $ServerData.JoinOptions.UserDomain    = ($NewDomainName -split("\."))[0]
     $ServerData.JoinOptions.Password      = $NewJoinPassword
 
-    $ServerData | ConvertTo-Json -Depth 5 | Out-File -FilePath "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json" -Encoding utf8
+    if (-NOT (Test-Path -Path "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json")) {
+        $ServerData | ConvertTo-Json -Depth 5 | Out-File -FilePath "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json" -Encoding utf8
+    } else {
+        Write-Warning "The server $($ServerData.Name).$($ServerData.JoinOptions.UserDNSDomain) already exist"
+    }
+}
+
+
+Function Prompt-YesNo {
+	Param (
+        [Parameter(Mandatory=$true)][String]$Title,
+		[Parameter(Mandatory=$true)][String]$Message,
+		[Parameter(Mandatory=$false)][Int]$DefaultOption = 0
+    )
+	
+	$No = New-Object System.Management.Automation.Host.ChoiceDescription '&No', 'No'
+	$Yes = New-Object System.Management.Automation.Host.ChoiceDescription '&Yes', 'Yes'
+	$Options = [System.Management.Automation.Host.ChoiceDescription[]]($No, $Yes)
+	
+	return $host.ui.PromptForChoice($Title, $Message, $Options, $DefaultOption)
+}
+
+switch(Prompt-YesNo -Title "Create Servers" -Message "Execute the Create-PVEServers script ?")
+{
+	0 { }
+	1 { & "$RootPath\Create-PVEServers.ps1" }
 }
