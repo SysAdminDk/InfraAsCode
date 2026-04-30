@@ -28,7 +28,7 @@ Import-Module -Name "$RootPath\Functions\IP2Mac.ps1"
 
 # Import master config
 # ------------------------------------------------------------
-if (-NOT (Test-Path -Path "$RootPath\MasterServerConfig.json")) {
+if (-NOT (Test-Path -Path "$JSONRoot\MasterServerConfig.json")) {
 
     Add-Type -AssemblyName System.Windows.Forms
 
@@ -44,7 +44,7 @@ if (-NOT (Test-Path -Path "$RootPath\MasterServerConfig.json")) {
         Throw "No file selected"
     }
 } else {
-    $MasterConfig  = Get-Content "$RootPath\MasterServerConfig.json" | ConvertFrom-Json
+    $MasterConfig  = Get-Content "$JSONRoot\MasterServerConfig.json" | ConvertFrom-Json
 }
 
 
@@ -139,5 +139,9 @@ Foreach ($Server in $SelectedServers) {
     $ServerData.JoinOptions.UserDomain    = ($SelectedDefaults.DomainName -split("\."))[0]
     $ServerData.JoinOptions.Password      = $SelectedDefaults.Password
 
-    $ServerData | ConvertTo-Json -Depth 5 | Out-File -FilePath "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json" -Encoding utf8
+    if (-NOT (Test-Path -Path "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json")) {
+        $ServerData | ConvertTo-Json -Depth 5 | Out-File -FilePath "$JSONRoot\JSON\$($ServerData.Network.PhysicalAddress).json" -Encoding utf8
+    } else {
+        Write-Warning "The server $($ServerData.Name).$($ServerData.JoinOptions.UserDNSDomain) already exist"
+    }
 }
