@@ -1,9 +1,0 @@
-{
-    "TenantId": "f2baf3a7-0c07-43cd-af86-7c620a96c2e2",
-    "SubscriptionID": "b42afafa-fee6-4cca-8c6b-b137fabde29f",
-    "ResourceGroup": "rg-weu-azl-dev",
-    "Region": "westeurope",
-    "Cloud": "AzureCloud",
-    "Proxy": "",
-    "ProxyBypass": ""
-}
