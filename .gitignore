@@ -1,7 +1,6 @@
-Secrets/ProductKeys.json
-Secrets/Proxmox-Connection.json
-Secrets/SubscriptionData.json
-Secrets/GitHub-Connection.json
-Platforms/AZL/SubscriptionData.json
+**/ProductKeys.json
+**/Proxmox-Connection.json
+**/SubscriptionData.json
+**/GitHub-Connection.json
 ConfigFiles/JSON/*.json
 **/[Tt]est*
