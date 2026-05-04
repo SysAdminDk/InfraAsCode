@@ -14,10 +14,20 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
 
 # JSON directory Path
 # ------------------------------------------------------------
-$IISDefault   = Get-IISSite
-$JSONRoot = [Environment]::ExpandEnvironmentVariables($(($IISDefault).Applications.VirtualDirectories[0].PhysicalPath)) + "\Deployment\ConfigFiles"
+Import-Module WebAdministration -ErrorAction Stop
+
+$DefaultSite  = Get-ChildItem "IIS:\Sites" | Select-Object -First 1
+$SiteName     = $DefaultSite.Name
+$PhysicalPath = [Environment]::ExpandEnvironmentVariables($DefaultSite.physicalPath)
+
+if ([string]::IsNullOrWhiteSpace($PhysicalPath) -or (-not (Test-Path -Path $PhysicalPath))) {
+    throw "Invalid IIS physical path: $PhysicalPath"
+}
+
+$JSONRoot = Join-Path -Path $PhysicalPath -ChildPath "\Deployment\ConfigFiles"
 if (-NOT (Test-Path -Path "$JSONRoot\JSON")) {
-    New-Item -Path "$JSONRoot\JSON" -ItemType Directory | Out-Null
+    throw "JSON Path not found"
+    Start-Sleep -Seconds 9999
 }
 
 
