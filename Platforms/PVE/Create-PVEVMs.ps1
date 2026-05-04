@@ -22,8 +22,7 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
 
 # Default Variables
 # ------------------------------------------------------------
-$DefaultTemplate = "2025-Standard"
-$PVESecret   = Get-Content -Path "$RootPath\Proxmox-Connection.json" | Convertfrom-Json
+#$DefaultTemplate = "2025-Standard"
 
 
 # Configure or extract the Vendor Max, will be used for all VMs created.
@@ -46,6 +45,25 @@ Get-ChildItem -Path "$RootPath\Functions" | ForEach-Object { Import-Module -Name
 
 # Connect to PVE Cluster
 # ------------------------------------------------------------
+if (-NOT (Test-Path -Path "$RootPath\Proxmox-Connection.json")) {
+
+    Add-Type -AssemblyName System.Windows.Forms
+
+    $FileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $FileDialog.InitialDirectory = $RootPath
+    $FileDialog.Filter = "JSON files (*.json)|*.json"
+    $FileDialog.Title  = "Select file"
+
+    if ($FileDialog.ShowDialog() -eq "OK") {
+        $PVESecret = Get-Content -Path $FileDialog.FileName | ConvertFrom-Json
+    }
+    else {
+        Throw "No file selected"
+    }
+} else {
+    $PVESecret = Get-Content -Path "$RootPath\Proxmox-Connection.json" | Convertfrom-Json
+}
+
 $PVEConnect = PVE-Connect -Authkey "$($PVESecret.User)!$($PVESecret.TokenID)=$($PVESecret.Token)" -Hostaddr $($PVESecret.Host)
 
 
@@ -68,7 +86,11 @@ $PVELocation = [PSCustomObject]@{
 
 # Find all templates
 # ------------------------------------------------------------
-$Template = Get-PVETemplates -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers | Where {$_.name -eq $DefaultTemplate}
+if ($DefaultTemplate) {
+    $Template = Get-PVETemplates -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers | Where {$_.name -eq $DefaultTemplate}
+} else {
+    $Template = Get-PVETemplates -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers
+}
 <#
 $Template = [PSCustomObject]@{
     "VmID" = "99999901";
@@ -88,6 +110,10 @@ $VMMacAddresses = $AllVMIDs | Foreach {
 }
 
 $VMsToCreate = (Compare-Object -ReferenceObject $VMMacAddresses -DifferenceObject $JsonFiles | Where-Object SideIndicator -eq "=>").InputObject
+
+if ( ($VMsToCreate.count -ne 0) -and ($Template.Count -gt 1) ) {
+    $Template = $Template | Out-GridView -Title "Select template to use" -OutputMode Single
+}
 
 
 Foreach ($ConfigFile in $VMsToCreate) {
