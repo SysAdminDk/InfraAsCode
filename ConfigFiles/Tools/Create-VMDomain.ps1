@@ -26,8 +26,7 @@ if ([string]::IsNullOrWhiteSpace($PhysicalPath) -or (-not (Test-Path -Path $Phys
 
 $JSONRoot = Join-Path -Path $PhysicalPath -ChildPath "\Deployment\ConfigFiles"
 if (-NOT (Test-Path -Path "$JSONRoot\JSON")) {
-    throw "JSON Path not found"
-    Start-Sleep -Seconds 9999
+    New-Item -Path "$JSONRoot\JSON" -ItemType Directory | Out-Null
 }
 
 
