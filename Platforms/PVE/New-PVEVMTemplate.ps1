@@ -275,9 +275,20 @@ if ($null -eq $VHDDrive) {
     #>
 
 
-    # Save GIT Token to Image.
+    # Save Local deployment information.
     # ------------------------------------------------------------
-    #$GitConnection | ConvertTo-Json | Out-File "$VHDXVolume3\Scripts\GitHub-Connection.json" -Encoding utf8
+    $Interface = Get-NetAdapter -Physical | Where-Object {$_.Status -EQ "UP"}
+    $IPConfig = $Interface | Get-NetIPAddress -AddressFamily IPv4
+    $DNSData = Resolve-DnsName -Name $IPConfig.IPv4Address
+    $DeploymentSite = (Get-WebVirtualDirectory -ErrorAction SilentlyContinue | Select-Object -First 1).path -replace("/","")
+
+    [PSCustomObject]@{
+        ServerName  = "$($DNSData.NameHost)";
+        IpAddress   = "$($IPConfig.IPv4Address)";
+        VirtualPath = "$($DeploymentSite)";
+        Username    = "";
+        Password    = "";
+    } | ConvertTo-Json | Out-File "$VHDXVolume3\Scripts\DeploymentServer.json" -Encoding utf8
 
 
     # Convert EVAL to Standard
