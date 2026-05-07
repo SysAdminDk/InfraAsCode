@@ -3,15 +3,22 @@
 Add-Type -AssemblyName System.Windows.Forms
 
 $Form = New-Object System.Windows.Forms.Form
+if (-NOT($psISE)) {
+    [System.Windows.Forms.Application]::EnableVisualStyles()
+    [System.Windows.Forms.Application]::SetCompatibleTextRenderingDefault($false)
+}
 $Form.Text = "PVE Script Launcher"
+$form.Font = New-Object System.Drawing.Font("Tahoma", 9)
+$Form.UseWaitCursor = $false
+$Form.AutoScaleMode = "Dpi"
 $Form.StartPosition = "CenterScreen"
+
 $Form.TopMost = $true
 
-$y = 10
-
 $Tools = @("New-PVEVMTemplate.ps1","Create-VMDomain.ps1","Add-VM2Domain.ps1","Create-PVEVMs.ps1")
-$Files = Get-ChildItem -Path "C:\Scripts" -Recurse | Where {$_.name -in $Tools}
+$Files = $Tools | Foreach { Get-ChildItem -Path "C:\Scripts" -Filter $_ -Recurse }
 
+$y = 10
 
 $Files | Foreach {
 
@@ -21,12 +28,12 @@ $Files | Foreach {
     $Button.Location = New-Object System.Drawing.Point(10,$y)
     $Button.Tag = $_.FullName
     $Button.Add_Click({
-        Start-Process powershell.exe -ArgumentList "-File `"$($this.Tag)`""
+        Start-Process PowerShell.exe -ArgumentList "-File `"$($this.Tag)`"" -WorkingDirectory "C:\Scripts"
     })
 
     $Form.Controls.Add($Button)
     $y += 35
 }
 $y += 45
-$Form.Size = New-Object System.Drawing.Size(400,$y)
+$Form.Size = New-Object System.Drawing.Size(385,$y)
 $Form.ShowDialog()
