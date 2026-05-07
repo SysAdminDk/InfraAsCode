@@ -17,16 +17,12 @@
 # ------------------------------------------------------------
 if ($PSScriptRoot -and $PSScriptRoot -ne "") {
     $RootPath = $PSScriptRoot
+    if (-Not(Test-Path "$RootPath\Functions")) {
+        $RootPath = Split-Path -Path $PSScriptRoot -Parent
+    }
 } else {
     $RootPath  = "C:\Scripts"
 }
-
-
-# Get GIT connection information
-# ------------------------------------------------------------
-#$GitConnection   = Get-Content -Path "$RootPath\GitHub-Connection.json" | Convertfrom-Json
-#$GitToken = $GitConnection.Token
-#$RepoUrl  = $GitConnection.Url
 
 
 # Import PVE modules
@@ -67,6 +63,19 @@ $MasterID = Get-PVEServerID -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.
 # Get information required to create the template (VM)
 # ------------------------------------------------------------
 $PVELocation = Get-PVELocation -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -IncludeNode $MasterID.Node
+
+
+# List ISO content, and add selected ISO to This VM
+# ------------------------------------------------------------
+$ISOStorage  = ((Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/storage" -Headers $($PVEConnect.Headers)).data | Where {$_.content -like "*iso*" -and $_.type -eq "dir"}).storage
+$ServerISO = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/storage/$ISOStorage/content" -Headers $($PVEConnect.Headers)).data | Select-Object -Property volid,format,size | Where {$_.volid -like "*Windows*Server*"} | Out-GridView -OutputMode Single
+$DiskId = Get-PVENextDiskID -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -VMID $MasterID.VmID
+
+$Body = "$DiskId=$([uri]::EscapeDataString("$($ServerISO.volid),media=cdrom"))"
+$Null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$($MasterID.VmID)/config" -Body $Body -Method Post -Headers $PVEConnect.Headers -Verbose:$false
+
+$Body = "boot=$([uri]::EscapeDataString("order=scsi0"))"
+$null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$($MasterID.VmID)/config" -Body $Body -Method POST -Headers $PVEConnect.Headers -Verbose:$false
 
 
 <#
@@ -290,6 +299,13 @@ if ($null -eq $VHDDrive) {
     Move OS disk back to template and convert.
 
 #>
+
+
+# Remove ISO
+# ------------------------------------------------------------
+$VMStatus = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Headers $PVEConnect.Headers -Verbose:$false).data
+$RemoveDrive = $VMStatus.PSObject.Properties | Where {$_.value -like "*$($ServerISO.volid)*"}
+$null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Body "delete=$($RemoveDrive.Name)&force" -Headers $PVEConnect.Headers -Method Post
 
 
 # Move Disk to template.
