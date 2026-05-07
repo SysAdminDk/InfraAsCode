@@ -8,9 +8,6 @@
 # ------------------------------------------------------------
 if ($PSScriptRoot -and $PSScriptRoot -ne "") {
     $RootPath = $PSScriptRoot
-    if (-Not(Test-Path "$RootPath\Functions")) {
-        $RootPath = Split-Path -Path $PSScriptRoot -Parent
-    }
 } else {
     $RootPath  = "C:\Scripts"
 }
