@@ -13,12 +13,10 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
 }
 
 
-# GIT Token and address
+# Deployment server Name and Address
 # ------------------------------------------------------------
-#$GitConnection = Get-Content -Path "$RootPath\GitHub-Connection.json" | Convertfrom-Json
-#$gitToken = $GitConnection.Token
-#$RepoUrl  = $GitConnection.Url
 $DeploymentServer = Get-Content -Path "$RootPath\DeploymentServer.json" | Convertfrom-Json
+
 $RepoUrl  = "http://$($DeploymentServer.DeploymentServerIP)/$($DeploymentServer.DeploymentDirectory)"
 
 
