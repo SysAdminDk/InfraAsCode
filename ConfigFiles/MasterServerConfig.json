@@ -16,8 +16,7 @@
                         "SubnetMask":  "255.255.255.0",
                         "DefaultGateway":  "10.36.0.1",
                         "DNSServers":  [
-                                           "8.8.8.8",
-                                           "8.8.4.4"
+                                           "10.36.0.1"
                                        ]
                     },
         "Hardware":  {
