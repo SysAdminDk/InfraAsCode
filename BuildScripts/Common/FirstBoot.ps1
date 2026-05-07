@@ -8,6 +8,9 @@
 # ------------------------------------------------------------
 if ($PSScriptRoot -and $PSScriptRoot -ne "") {
     $RootPath = $PSScriptRoot
+    if (-Not(Test-Path "$RootPath\Functions")) {
+        $RootPath = Split-Path -Path $PSScriptRoot -Parent
+    }
 } else {
     $RootPath  = "C:\Scripts"
 }
@@ -15,51 +18,32 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
 
 # Deployment server Name and Address
 # ------------------------------------------------------------
-$DeploymentServer = Get-Content -Path "$RootPath\DeploymentServer.json" | Convertfrom-Json
-
-$RepoUrl  = "http://$($DeploymentServer.DeploymentServerIP)/$($DeploymentServer.DeploymentDirectory)"
-
-
-# Bootstrap location
-# ------------------------------------------------------------
-$Filename = "BootStrap.ps1"
-#$URL = "$RepoUrl/Unattended/contents/WindowsServer/$Filename"
-$URL = "$RepoUrl/BuildScripts/Common/$Filename"
-
-
-# Verify access to GIT
-# ------------------------------------------------------------
-for ($i=0; $i -lt 10; $i++) {
-    try {
-        #if ($gitToken -ne "") {
-        #    $Response = Invoke-RestMethod -Uri $url -Headers @{ Authorization = "token $gitToken" }
-        #} else {
-            $Response = Invoke-RestMethod -Uri $url -OutFile "$RootPath\$Filename"
-        #}
-        
-        #if (-not $Response) {
-        #    throw "Git returned no content for $Filename"
-        #} else {
-        #    $FileBytes = [System.Convert]::FromBase64String($Response.content)
-        #    [System.IO.File]::WriteAllBytes("$RootPath\$Filename", $FileBytes)
-        #}
-
-        if (Test-Path -Path "$RootPath\$Filename") {
-            break
-        }
-    }
-    catch {
-        Start-Sleep -Seconds 30
-    }
+$Deployment = Get-Content -Path "$RootPath\DeploymentServer.json" | Convertfrom-Json
+try {
+    Resolve-DnsName $Deployment.ServerName -QuickTimeout -ErrorAction Stop | Out-Null
+    $DeploymentServer = $Deployment.ServerName
 }
+catch {
+    $DeploymentServer = $Deployment.IpAddress
+}
+
+if (-not (Test-NetConnection $DeploymentServer -CommonTCPPort HTTP -InformationLevel Quiet)) {
+    throw "Unable to connect to Deployment Website"
+} else {
+    $RepoUrl  = "http://$DeploymentServer/$($Deployment.VirtualPath)"
+}
+
+
+# Download Bootstrap
+# ------------------------------------------------------------
+$URL = "$RepoUrl/BuildScripts/Common/BootStrap.ps1"
+$Response = Invoke-RestMethod -Uri $url -OutFile "$RootPath\$Filename"
 
 
 # Start Bootstrap.
 # ------------------------------------------------------------
 if (Test-Path -Path "$RootPath\$Filename") {
-
     Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$Filename`""
-
 } else {
     Throw "Bootstrap NOT found"
     Start-Sleep -Seconds 9999
