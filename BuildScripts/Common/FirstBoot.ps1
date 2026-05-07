@@ -24,6 +24,7 @@ catch {
     $DeploymentServer = $Deployment.IpAddress
 }
 
+
 if (-not (Test-NetConnection $DeploymentServer -CommonTCPPort HTTP -InformationLevel Quiet)) {
     throw "Unable to connect to Deployment Website"
 } else {
@@ -33,14 +34,14 @@ if (-not (Test-NetConnection $DeploymentServer -CommonTCPPort HTTP -InformationL
 
 # Download Bootstrap
 # ------------------------------------------------------------
-$URL = "$RepoUrl/BuildScripts/Common/BootStrap.ps1"
-$Response = Invoke-RestMethod -Uri $url -OutFile "$RootPath\$Filename"
+$Filename = "BootStrap.ps1"
+Invoke-RestMethod -Uri "$RepoUrl/BuildScripts/Common/$Filename" -OutFile "$RootPath\$Filename"
 
 
 # Start Bootstrap.
 # ------------------------------------------------------------
 if (Test-Path -Path "$RootPath\$Filename") {
-    Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$Filename`""
+    #Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$Filename`""
 } else {
     Throw "Bootstrap NOT found"
     Start-Sleep -Seconds 9999
