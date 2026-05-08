@@ -2,27 +2,30 @@
     {
         "FirstName":  "Jan",
         "LastName":  "Kristensen",
-        "Access":  {
+        "Type":  "FTE",
+        "Access":  [
                        "T0",
                        "T1",
                        "T2",
-                       "TE"
-                   }
+                       "Te"
+                   ]
     },
     {
         "FirstName":  "Homer",
         "LastName":  "Simpson",
-        "Access":  {
-                       "T1",
-                       "TE"
-                   }
+        "Type":  "EXT",
+        "Access":  [
+                       "T1L",
+                       "T2L"
+                   ]
     },
     {
         "FirstName":  "Marjorie Bouvier",
         "LastName":  "Simpson",
-        "Access":  {
-                       "T1",
-                       "TE"
-                   }
+        "Type":  "EXT",
+        "Access":  [
+                       "T1L",
+                       "T2L"
+                   ]
     }
-]  
+]
