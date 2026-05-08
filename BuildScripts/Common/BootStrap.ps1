@@ -20,26 +20,32 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
 }
 
 
-# GIT Token and address
+# Deployment server Name and Address
 # ------------------------------------------------------------
-#$GitConnection = Get-Content -Path "$RootPath\GitHub-Connection.json" | Convertfrom-Json
-#$gitToken = $GitConnection.Token
-#$RepoUrl  = $GitConnection.Url
-$DeploymentServer = Get-Content -Path "$RootPath\DeploymentServer.json" | Convertfrom-Json
-$RepoUrl  = "http://$($DeploymentServer.DeploymentServerIP)/$($DeploymentServer.DeploymentDirectory)"
+if (-NOT (Test-Path -Path "$RootPath\DeploymentServer.json")) {
+    Write-Warning "Missing Deployment server connection information"
+    Start-Sleep -Seconds 600
+}
+
+$Deployment = Get-Content -Path "$RootPath\DeploymentServer.json" | Convertfrom-Json
+try {
+    Resolve-DnsName $Deployment.ServerName -QuickTimeout -ErrorAction Stop | Out-Null
+    $DeploymentServer = $Deployment.ServerName
+}
+catch {
+    $DeploymentServer = $Deployment.IpAddress
+}
 
 
-# GIT Defaults.
-# ------------------------------------------------------------
-Write-Output "Script Start : $LogDate"
-#$GitConnection = Get-Content -Path "$PSScriptRoot\GitHub-Connection.json" | Convertfrom-Json
-#$gitToken = $GitConnection.Token
-#$RepoUrl  = $GitConnection.Url
+if (-not (Test-NetConnection $DeploymentServer -CommonTCPPort HTTP -InformationLevel Quiet)) {
+    throw "Unable to connect to Deployment Website"
+} else {
+    $RepoUrl  = "http://$DeploymentServer/$($Deployment.VirtualPath)"
+}
 
 
 # Expand OS Volume if needed.
 # ------------------------------------------------------------
-Write-Output "Expand OS Drive, if needed"
 $OSDrive = Get-Volume -DriveLetter ($ENV:SYstemDrive).Replace(":","")
 $SizeBefore = (Get-Volume -DriveLetter $OSDrive.DriveLetter).Size
 $Partition = Get-Partition -DriveLetter $OSDrive.DriveLetter
@@ -58,22 +64,9 @@ $IPConfig = $Interface | Get-NetIPAddress -AddressFamily IPv4
 
 # Get Server Config from GIT
 # ------------------------------------------------------------
-Write-Output "Get Server Config file from GIT"
 if (-NOT (Test-Path -Path "$RootPath\ServerConfig.json")) {
-
     $MACAddress = @("00","00") + (($($Interface.MacAddress) -split("-"))[2..5]) -join("-")
-
-#    if ($($GitConnection.Token)) {
-#        $Response = Invoke-RestMethod -Uri "$($GitConnection.Url)/LAB-Deployment/contents/ConfigFiles/JSON/$MACAddress.json" -Headers @{ Authorization = "token $($GitConnection.Token)" }
-#    } else {
-#        $Response = Invoke-RestMethod -Uri "$($GitConnection.Url)/LAB-Deployment/contents/ConfigFiles/JSON/$MACAddress.json"
-#    }
-#
-#    $FileBytes = [System.Convert]::FromBase64String($Response.content)
-#    [System.IO.File]::WriteAllBytes("$RootPath\ServerConfig.json", $FileBytes)
-
-    Invoke-WebRequest -Uri "$RepoUrl/ConfigFiles/JSON/$MACAddress.json" -OutFile "$RootPath\ServerConfig.json" -UseBasicParsing
-
+    Invoke-WebRequest -Uri "$RepoUrl/ConfigFiles/JSON/$MACAddress.json" -UseBasicParsing -OutFile "$RootPath\ServerConfig.json"
 }
 
 
@@ -83,7 +76,7 @@ if (-NOT (Test-Path -Path "$RootPath\ServerConfig.json")) {
 if (Test-Path -Path "$RootPath\ServerConfig.json") {
     $ServerConfig = Get-Content -Path "$RootPath\ServerConfig.json" | ConvertFrom-Json
 } else {
-    Throw "Server config is missing"
+    Write-Error "Server config is missing"
     Start-Sleep -Seconds 99999
 }
 
@@ -104,7 +97,6 @@ if (!(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Ru
 
 # Update IP Address from Config
 # ------------------------------------------------------------
-Write-Output "Update Network Configuration"
 if ($IPConfig.PrefixOrigin -eq "DHCP") {
     $Bits = ([string]([Convert]::ToString(([IPAddress]::Parse($ServerConfig.Network.SubnetMask).address),2)))
     $Prefix = $Bits.ToCharArray().Count
@@ -116,7 +108,6 @@ if ($IPConfig.PrefixOrigin -eq "DHCP") {
 
 # Set Computer Name
 # ------------------------------------------------------------
-Write-Output "Change Computer Name"
 if ($env:COMPUTERNAME -ne $ServerConfig.Name) {
 
     if ($null -eq $ServerConfig.DomainName) {
@@ -229,30 +220,16 @@ Foreach ($Role in $ServerConfig.Roles) {
 # ------------------------------------------------------------
 Foreach ($Task in $ServerConfig.Tasks) {
 
-    $ScriptName = Split-Path -Path "$($Task.Name)" -Leaf
-    $ScriptName
+    $FileName = Split-Path -Path $($Task.Name) -Leaf
 
     # Ensure we have the required script avalible
     # ------------------------------------------------------------
-    if (-NOT (Test-Path -Path "$RootPath\$ScriptName")) {
+    if (-NOT (Test-Path -Path "$RootPath\$FileName")) {
 
         try {
-#            $FileUri = "LAB-Infrastructure/contents/Build/$($Task.Name)"
-#
-#            if ($($GitConnection.Token)) {
-#                $Response = Invoke-RestMethod -Uri "$($GitConnection.Url)/$FileUri" -Headers @{ Authorization = "token $($GitConnection.Token)" } -ErrorAction Stop
-#            } else {
-#                $Response = Invoke-RestMethod -Uri "$($GitConnection.Url)/$FileUri" -ErrorAction Stop
-#            }
-#
-#            $FileBytes = [System.Convert]::FromBase64String($Response.content)
-#            [System.IO.File]::WriteAllBytes("$RootPath\$($Response.name)", $FileBytes)
 
-            Write-Host "$RepoUrl/BuildScripts/$($Task.Name)"
-            Invoke-WebRequest -Uri "$RepoUrl/BuildScripts/$($Task.Name)" -OutFile "$RootPath\$ScriptName" -UseBasicParsing
-            Write-Host "$RootPath\$ScriptName"
+            Invoke-RestMethod -Uri "$RepoUrl/BuildScripts/$($Task.Name)" -OutFile "$RootPath\$FileName"
 
-            $ErrorCode = $null
         }
         Catch {
             $ErrorCode = ($_.ErrorDetails.Message | ConvertFrom-Json).message
@@ -276,9 +253,8 @@ Foreach ($Task in $ServerConfig.Tasks) {
 
         # Execute configuraton Script
         # ------------------------------------------------------------
-        Write-Host "$RootPath\$ScriptName"
-        Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$ScriptName`"" -Wait
-        
+        Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$FileName`"" -Wait
+
 
         # Read Task Status (Restart or Completed)
         # ------------------------------------------------------------
@@ -295,7 +271,7 @@ Foreach ($Task in $ServerConfig.Tasks) {
 
 
     if ($Task.status -eq "Completed") {
-        Remove-Item "$RootPath\$($Task.Name)" -Force
+        Remove-Item "$RootPath\$FileName" -Force
     }
 
 }
