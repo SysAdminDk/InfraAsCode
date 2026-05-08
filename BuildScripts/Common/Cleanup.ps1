@@ -14,14 +14,23 @@
 #>
 
 
+# Path to PVE scripts and Functions.
+# ------------------------------------------------------------
+if ($PSScriptRoot -and $PSScriptRoot -ne "") {
+    $RootPath = $PSScriptRoot
+} else {
+    $RootPath  = "C:\Scripts"
+}
+
+
 # Clear Autologin
 # ------------------------------------------------------------
 $Winlogon = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
 
-#Set-ItemProperty $Winlogon AutoLogonCount 0
-#Remove-ItemProperty $Winlogon DefaultUserName -ErrorAction SilentlyContinue
-#Remove-ItemProperty $Winlogon DefaultDomainName -ErrorAction SilentlyContinue
-#Remove-ItemProperty $Winlogon DefaultPassword -ErrorAction SilentlyContinue
+Set-ItemProperty $Winlogon AutoLogonCount 0
+Remove-ItemProperty $Winlogon DefaultUserName -ErrorAction SilentlyContinue
+Remove-ItemProperty $Winlogon DefaultDomainName -ErrorAction SilentlyContinue
+Remove-ItemProperty $Winlogon DefaultPassword -ErrorAction SilentlyContinue
 
 
 # Clear Autorun
@@ -32,15 +41,12 @@ Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 
 
 # Clean the Scripts folder
 # ------------------------------------------------------------
-#Remove-Item "$PSScriptRoot\*" -Recurse -Force
+Get-ChildItem -Path $RootPath -Exclude "ADTiering" | Remove-Item -Recurse -Force
+Get-ChildItem -Path $RootPath -Filter "Deploy-TSxADTiering.ps1" -Recurse | Remove-Item
+Get-ChildItem -Path $RootPath -Filter "ExtraOrganizationalUnits.csv" -Recurse | Remove-Item
 Remove-Item "$($env:windir)\Panther\Unattend.xml" -Force
 
 
 # Run GPUpdate (Get LAPS PW rotated)
 # ------------------------------------------------------------
 Gpupdate /Target:Computer /Force
-
-
-# Logoff any sessions.
-# ------------------------------------------------------------
-Logoff
