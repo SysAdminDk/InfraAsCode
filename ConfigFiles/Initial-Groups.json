@@ -1,12 +1,17 @@
 [
     {
-        "Name":  "Admin File Share RW",
-        "SubPath":  "OU=Groups,OU=Tier0",
+        "Name":  "Access - PingCastle Readers",
+        "Tier":  "Tier1",
+        "Description":  "Read access to PingCastle Rapports"
+    },
+    {
+        "Name":  "Access - Admin File Share RW",
+        "Tier":  "Tier1",
         "Description":  "Read/Write access to IT Admin Share"
     },
     {
-        "Name":  "Admin File Share RO",
-        "SubPath":  "OU=Groups,OU=Tier0",
+        "Name":  "Access - Admin File Share RO",
+        "Tier":  "Tier1",
         "Description":  "Read only access to IT Admin Share"
     }
 ]
