@@ -15,6 +15,11 @@ if ($PSScriptRoot -and $PSScriptRoot -ne "") {
 
 # Deployment server Name and Address
 # ------------------------------------------------------------
+if (-NOT (Test-Path -Path "$RootPath\DeploymentServer.json")) {
+    Write-Warning "Missing Deployment server connection information"
+    Start-Sleep -Seconds 600
+}
+
 $Deployment = Get-Content -Path "$RootPath\DeploymentServer.json" | Convertfrom-Json
 try {
     Resolve-DnsName $Deployment.ServerName -QuickTimeout -ErrorAction Stop | Out-Null
@@ -41,7 +46,7 @@ Invoke-RestMethod -Uri "$RepoUrl/BuildScripts/Common/$Filename" -OutFile "$RootP
 # Start Bootstrap.
 # ------------------------------------------------------------
 if (Test-Path -Path "$RootPath\$Filename") {
-    #Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$Filename`""
+    Start-Process -FilePath powershell.exe -ArgumentList "-file `"$RootPath\$Filename`""
 } else {
     Throw "Bootstrap NOT found"
     Start-Sleep -Seconds 9999
