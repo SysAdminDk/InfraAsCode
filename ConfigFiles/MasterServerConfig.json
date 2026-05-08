@@ -41,27 +41,27 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "ADDS-01.ps1",
+                          "name":  "Services/ADDS-01.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "ADDS-Tiering.ps1",
+                          "name":  "Custom/Active Directory/ADDS-Tiering.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "ADDS-Hardening.ps1",
+                          "name":  "Custom/Active Directory/ADDS-Hardening.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "ADDS-WBackup.ps1",
+                          "name":  "Custom/Active Directory/ADDS-WBackup.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "ADDS-InitialUsers.ps1",
+                          "name":  "Custom/Active Directory/ADDS-InitialUsers.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -110,15 +110,15 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "ADDS-0x.ps1",
+                          "name":  "Services/ADDS-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "ADDS-WBackup.ps1",
+                          "name":  "Custom/Active Directory/ADDS-WBackup.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -167,15 +167,15 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "ADDS-0x.ps1",
+                          "name":  "Services/ADDS-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "ADDS-WBackup.ps1",
+                          "name":  "Custom/Active Directory/ADDS-WBackup.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -219,11 +219,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "ADCA-01.ps1",
+                          "name":  "Services/ADCA-01.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -262,11 +262,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AADC-01.ps1",
+                          "name":  "Services/AADC-01.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -305,11 +305,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AADC-02.ps1",
+                          "name":  "Services/AADC-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -348,11 +348,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AAPP-01.ps1",
+                          "name":  "Services/AAPP-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -391,11 +391,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AAPP-02.ps1",
+                          "name":  "Services/AAPP-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -482,11 +482,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-0x.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -574,11 +574,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-0x.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -626,11 +626,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RDGW-0x.ps1",
+                          "name":  "Services/RDGW-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -678,11 +678,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RDGW-0x.ps1",
+                          "name":  "Services/RDGW-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -724,11 +724,11 @@
                   },
         "Tasks":  [
                       {
-                          "name":  "AMFA-0x.ps1",
+                          "name":  "Services/AMFA-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -770,11 +770,11 @@
                   },
         "Tasks":  [
                       {
-                          "name":  "AMFA-0x.ps1",
+                          "name":  "Services/AMFA-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -813,11 +813,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "MEAP-01.ps1",
+                          "name":  "Services/MEAP-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -856,11 +856,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "MEAP-02.ps1",
+                          "name":  "Services/MEAP-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -903,11 +903,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "MSQL-0x.ps1",
+                          "name":  "Services/MSQL-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -955,7 +955,7 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MSQL-0x.ps1",
+                          "name":  "Services/MSQL-0x.ps1",
                           "status":  "pending"
                       },
                       {
@@ -963,7 +963,7 @@
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1011,7 +1011,7 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MSQL-0x.ps1",
+                          "name":  "Services/MSQL-0x.ps1",
                           "status":  "pending"
                       },
                       {
@@ -1019,7 +1019,7 @@
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1063,7 +1063,7 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MSQL-0x.ps1",
+                          "name":  "Services/MSQL-0x.ps1",
                           "status":  "pending"
                       },
                       {
@@ -1071,7 +1071,7 @@
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1115,11 +1115,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RDCB-01.ps1",
+                          "name":  "Services/RDCB-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1163,11 +1163,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RDCB-02.ps1",
+                          "name":  "Services/RDCB-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1211,11 +1211,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RDLI-01.ps1",
+                          "name":  "Services/RDLI-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1259,11 +1259,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RDLI-02.ps1",
+                          "name":  "Services/RDLI-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1307,11 +1307,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "DHCP-01.ps1",
+                          "name":  "Services/DHCP-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1355,11 +1355,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "DHCP-02.ps1",
+                          "name":  "Services/DHCP-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1401,11 +1401,11 @@
                   },
         "Tasks":  [
                       {
-                          "name":  "NPAS-0x.ps1",
+                          "name":  "Services/NPAS-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1447,11 +1447,11 @@
                   },
         "Tasks":  [
                       {
-                          "name":  "NPAS-0x.ps1",
+                          "name":  "Services/NPAS-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1495,11 +1495,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RRAS-01.ps1",
+                          "name":  "Services/RRAS-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1543,11 +1543,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "RRAS-02.ps1",
+                          "name":  "Services/RRAS-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1593,11 +1593,11 @@
                   },
         "Tasks":  [
                       {
-                          "name":  "FILE-0x.ps1",
+                          "name":  "Services/FILE-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1636,11 +1636,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "FILE-0x.ps1",
+                          "name":  "Services/FILE-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1684,11 +1684,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "DFSR-01.ps1",
+                          "name":  "Services/DFSR-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1768,11 +1768,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-0x.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1852,11 +1852,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-0x.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1900,11 +1900,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-13L.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1948,11 +1948,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-14L.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -1996,11 +1996,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-21.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -2044,11 +2044,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-22.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -2092,11 +2092,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-23L.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -2140,11 +2140,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-24L.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -2188,11 +2188,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-91.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -2236,11 +2236,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "MGMT-92.ps1",
+                          "name":  "Services/MGMT-0x.ps1",
                           "status":  "pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
                   ]
@@ -2292,11 +2292,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "HyperV-Prep.ps1",
+                          "name":  "HyperV-0x.ps1",
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
@@ -2348,11 +2348,11 @@
                   ],
         "Tasks":  [
                       {
-                          "name":  "HyperV-Prep.ps1",
+                          "name":  "HyperV-0x.ps1",
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
@@ -2397,11 +2397,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AZL-Prep.ps1",
+                          "name":  "AZL-0x.ps1",
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
@@ -2446,11 +2446,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AZL-Prep.ps1",
+                          "name":  "AZL-0x.ps1",
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
@@ -2495,11 +2495,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AZL-Prep.ps1",
+                          "name":  "AZL-0x.ps1",
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
@@ -2544,11 +2544,11 @@
         "Roles":  "",
         "Tasks":  [
                       {
-                          "name":  "AZL-Prep.ps1",
+                          "name":  "AZL-0x.ps1",
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
@@ -2597,7 +2597,7 @@
                           "status":  "Pending"
                       },
                       {
-                          "name":  "Cleanup.ps1",
+                          "name":  "Common/Cleanup.ps1",
                           "status":  "Pending"
                       }
                   ]
