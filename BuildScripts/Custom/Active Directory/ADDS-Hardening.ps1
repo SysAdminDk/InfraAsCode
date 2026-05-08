@@ -16,7 +16,7 @@
 
 # Install MSFT Baselines.
 # ------------------------------------------------------------
-$Uri = "https://api.github.com/repos/SysAdminDk/MS-Infrastructure/contents/ADDS%20Scripts/Security%20Baselines/MSFT%20Baseline?ref=$Branch"
+$Uri = "https://api.github.com/repos/SysAdminDk/InfraTools/contents/Active%20Directory/Configure/Security%20Baselines/MSFT%20Baseline?ref=main"
 $Files = Invoke-RestMethod -Uri $Uri -Headers @{ "User-Agent" = "Powershell" }
 
 $Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$PSScriptRoot\$($_.Name)" }
@@ -24,7 +24,7 @@ $Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$PSScriptRoot\$($_
 
 # Get MY Add WMI Filters script.
 # ------------------------------------------------------------
-$Uri = "https://api.github.com/repos/SysAdminDk/MS-Infrastructure/contents/ADDS%20Scripts/Security%20Baselines/WMI-Filters?ref=$Branch"
+$Uri = "https://api.github.com/repos/SysAdminDk/InfraTools/contents/Active%20Directory/Configure/Security%20Baselines/WMI-Filters?ref=main"
 $Files = Invoke-RestMethod -Uri $Uri -Headers @{ "User-Agent" = "Powershell" }
 
 $Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$PSScriptRoot\$($_.Name)" }
@@ -67,11 +67,10 @@ if ($SearchBase) {
 if (-NOT (Get-GPO -Name "MSFT - DISABLE Windows LAPS" -ErrorAction SilentlyContinue)) {
     $GPO = New-GPO -Name "MSFT - DISABLE Windows LAPS"
     (Get-GPO -Name $GPO.DisplayName).GpoStatus = "UserSettingsDisabled"
-
+    
     Set-GPRegistryValue -Name $GPO.DisplayName -Key "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS" -ValueName AutomaticAccountManagementEnabled -Value 0 -Type DWord | Out-Null
     Set-GPRegistryValue -Name $GPO.DisplayName -Key "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS" -ValueName AutomaticAccountManagementTarget -value 1 -Type DWord | Out-Null
     Set-GPRegistryValue -Name $GPO.DisplayName -Key "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS" -ValueName BackupDirectory -Value 0 -Type DWord | Out-Null
-    #AdministratorAccountName
 
     # Create WMI Filter.
     # ------------------------------------------------------------
@@ -119,6 +118,6 @@ If (Test-Path -Path "$PSScriptRoot\ServerConfig.json") {
 # Change Task to Completed
 # ------------------------------------------------------------
 if ($ServerConfig) {
-    ($ServerConfig.Tasks | Where-Object { $_.Name -eq "ADDS-01.ps1" }).status = "Completed"
+    ($ServerConfig.Tasks | Where-Object { $_.Name -like "*$(Split-Path $PSCommandPath -Leaf)" }).status = "Completed"
     $ServerConfig | ConvertTo-Json -Depth 5 | Out-File -FilePath "$RootPath\ServerConfig.json" -Encoding utf8 -Force
 }
