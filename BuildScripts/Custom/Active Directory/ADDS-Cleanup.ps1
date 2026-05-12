@@ -51,6 +51,6 @@ If (Test-Path -Path "$PSScriptRoot\ServerConfig.json") {
 # Change Task to Completed
 # ------------------------------------------------------------
 if ($ServerConfig) {
-    ($ServerConfig.Tasks | Where-Object { $_.Name -eq "ADDS-01.ps1" }).status = "Completed"
+    ($ServerConfig.Tasks | Where-Object { $_.Name -like "*$(Split-Path $PSCommandPath -Leaf)" }).status = "Completed"
     $ServerConfig | ConvertTo-Json -Depth 5 | Out-File -FilePath "$RootPath\ServerConfig.json" -Encoding utf8 -Force
 }
