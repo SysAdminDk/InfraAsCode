@@ -95,7 +95,7 @@ $GitJsonFiles = ($FLResponse.Links.href | Where {$_ -like "*$MACFilter*"}) -repl
 $CreateOUs = New-Object System.Collections.ArrayList
 $CreateServers = New-Object System.Collections.ArrayList
 
-$GitJsonFiles[1] | Foreach {
+$GitJsonFiles | Foreach {
 
     Invoke-WebRequest -Uri "$RepoUrl/$($_)" -UseBasicParsing -OutFile "$($ENV:TEMP)\JsonConvert.json"
     $ServerData = Get-Content -Path "$($ENV:TEMP)\JsonConvert.json" -Raw -Encoding UTF8 | ConvertFrom-Json
