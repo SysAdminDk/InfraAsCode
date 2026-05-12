@@ -69,9 +69,20 @@ if ($NewTag -NotIn $response.rows.tag) {
 }
 
 
+Invoke-RestMethod -Uri "https://$FWAddress/api/interfaces/overview/export" -Headers $Headers
+
+$Settings = Invoke-RestMethod -Uri "https://$FWAddress/api/interfaces/settings/get" -Headers $Headers
+$Settings.settings
 
 
+Invoke-RestMethod -Uri "https://$FWAddress/api/interfaces/overview/getInterface" -Headers $Headers
 
+
+Invoke-RestMethod -Uri "https://$FWAddress/" -Headers $Headers
+Invoke-RestMethod -Uri "https://$FWAddress/" -Headers $Headers
+Invoke-RestMethod -Uri "https://$FWAddress/" -Headers $Headers
+Invoke-RestMethod -Uri "https://$FWAddress/" -Headers $Headers
+Invoke-RestMethod -Uri "https://$FWAddress/" -Headers $Headers
 
 
 
