@@ -146,7 +146,7 @@ if (-Not(Get-ADOrganizationalUnit -Filter "Name -eq 'Quarantine'")) {
     $NewUserOU     = New-TSxADOrganizationalUnit -Name "Users"      -Path $ParrentOU
 
     & redircmp.exe $NewComputerOU.DistinguishedName
-    & redircmp.exe $NewUserOU.DistinguishedName
+    & redirusr.exe $NewUserOU.DistinguishedName
     
     <#
     # Cleanup
