@@ -72,10 +72,12 @@ $ServerISO = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation
 $DiskId = Get-PVENextDiskID -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -VMID $MasterID.VmID
 
 $Body = "$DiskId=$([uri]::EscapeDataString("$($ServerISO.volid),media=cdrom"))"
-$Null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$($MasterID.VmID)/config" -Body $Body -Method Post -Headers $PVEConnect.Headers -Verbose:$false
+$AddMedia = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$($MasterID.VmID)/config" -Body $Body -Method Post -Headers $PVEConnect.Headers -Verbose:$false
+Start-PVEWait -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -Taskid $AddMedia.data
 
 $Body = "boot=$([uri]::EscapeDataString("order=scsi0"))"
-$null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$($MasterID.VmID)/config" -Body $Body -Method POST -Headers $PVEConnect.Headers -Verbose:$false
+$UpdateBoot = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$($MasterID.VmID)/config" -Body $Body -Method POST -Headers $PVEConnect.Headers -Verbose:$false
+Start-PVEWait -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -Taskid $UpdateBoot.data
 
 
 <#
@@ -127,182 +129,181 @@ Start-PVEWait -ProxmoxAPI $($PVEConnect.PVEAPI) -Headers $PVEConnect.Headers -no
 #>
 
 
-## Move OS disk to THIS server.
+## Create new OS disk on THIS server.
 ## ------------------------------------------------------------
-#$TmpDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $TemplateID -TargetVM $MasterID.VmID -Wait
-# Create OS drive on THIS VM.
 $DiskId = Get-PVENextDiskID -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -VMID $MasterID.VmID
-
-$Null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Body "$DiskId=$([uri]::EscapeDataString("$($PVELocation.Storage):$OSDisk"))" -Method Post -Headers $PVEConnect.Headers -Verbose:$false
-
-
-
-# Pause 5 sec, need PnP to work
-# ------------------------------------------------------------
-Start-Sleep -Seconds 2
+$NewDisk = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Body "$DiskId=$([uri]::EscapeDataString("$($PVELocation.Storage):$OSDisk"))" -Method Post -Headers $PVEConnect.Headers -Verbose:$false
+Start-PVEWait -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -Node $MasterID.Node -Taskid $NewDisk.data
 
 
 # Initialize disk, and create UEFI partions
 # ------------------------------------------------------------
-$VHDDrive = Get-Disk | Where {$_.partitionstyle -eq 'RAW' -and $_.Size -eq $($OSDisk * 1Gb) }
+for ($i=0; $I -lt 10; $i++) {
+    $VHDDrive = Get-Disk | Where {$_.partitionstyle -eq 'RAW' -and $_.Size -eq $($OSDisk * 1Gb) }
+    if ($VHDDrive) {
+        break
+    }
+    Start-Sleep -Seconds 1
+}
+
+
 if ($null -eq $VHDDrive) {
 
     throw "Unable to locate any avalible disk"
 
-} else {
-
-    Initialize-Disk -Number $VHDDrive.number -PartitionStyle GPT
-
-    Get-Partition -DiskNumber $VHDDrive.number | Remove-Partition -Confirm:$false
-
-    $VHDXDrive1 = New-Partition -DiskNumber $VHDDrive.number -GptType  "{c12a7328-f81f-11d2-ba4b-00a0c93ec93b}" -AssignDriveLetter -Size 100Mb
-    $VHDXDrive1 | Format-Volume -FileSystem FAT32 -NewFileSystemLabel System -Confirm:$false | Out-null
-
-    $VHDXDrive2 = New-Partition -DiskNumber $VHDDrive.number -GptType "{e3c9e316-0b5c-4db8-817d-f92df00215ae}" -Size 16Mb
-
-    $VHDXDrive3 = New-Partition -DiskNumber $VHDDrive.number -UseMaximumSize -AssignDriveLetter
-    $VHDXDrive3 | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Windows" -Confirm:$false | Out-null
+}
 
 
-    # Add Drive letters
-    # ------------------------------------------------------------
-    $VHDXDrive1 = Get-Partition -DiskNumber $VHDDrive.number -PartitionNumber $VHDXDrive1.PartitionNumber
-    $VHDXVolume1 = [string]$VHDXDrive1.DriveLetter+":"
+Initialize-Disk -Number $VHDDrive.number -PartitionStyle GPT
 
-    $VHDXDrive3 = Get-Partition -DiskNumber $VHDDrive.number -PartitionNumber $VHDXDrive3.PartitionNumber
-    $VHDXVolume3 = [string]$VHDXDrive3.DriveLetter+":"
+Get-Partition -DiskNumber $VHDDrive.number | Remove-Partition -Confirm:$false
+
+$VHDXDrive1 = New-Partition -DiskNumber $VHDDrive.number -GptType  "{c12a7328-f81f-11d2-ba4b-00a0c93ec93b}" -AssignDriveLetter -Size 100Mb
+$VHDXDrive1 | Format-Volume -FileSystem FAT32 -NewFileSystemLabel System -Confirm:$false | Out-null
+
+$VHDXDrive2 = New-Partition -DiskNumber $VHDDrive.number -GptType "{e3c9e316-0b5c-4db8-817d-f92df00215ae}" -Size 16Mb
+
+$VHDXDrive3 = New-Partition -DiskNumber $VHDDrive.number -UseMaximumSize -AssignDriveLetter
+$VHDXDrive3 | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Windows" -Confirm:$false | Out-null
 
 
-    # Find all instances of Install.Wim om THIS computer.
-    # --
-    $ExcludeDrives = @()
-    $ExcludeDrives += $(($env:SystemDrive) -replace(":",""))
-    $ExcludeDrives += $VHDXDrive1.DriveLetter
-    $ExcludeDrives += $VHDXDrive3.DriveLetter
-    #$ExcludeDrives += $(Get-Volume | Where-Object {$_.drivetype -eq 'CD-ROM'}).DriveLetter
+# Add Drive letters
+# ------------------------------------------------------------
+$VHDXDrive1 = Get-Partition -DiskNumber $VHDDrive.number -PartitionNumber $VHDXDrive1.PartitionNumber
+$VHDXVolume1 = [string]$VHDXDrive1.DriveLetter+":"
 
-    $Drives = Get-Volume | Where {$_.DriveLetter -notin $ExcludeDrives -and $_.DriveLetter -ne $null}
-    $FoundImages = $Drives | foreach { (Get-ChildItem -Path "$($_.DriveLetter):\" -Recurse -filter "install.wim" -ErrorAction SilentlyContinue).fullname } | Where-Object { $_ }
+$VHDXDrive3 = Get-Partition -DiskNumber $VHDDrive.number -PartitionNumber $VHDXDrive3.PartitionNumber
+$VHDXVolume3 = [string]$VHDXDrive3.DriveLetter+":"
+
+
+# Find all instances of Install.Wim om THIS computer.
+# --
+$ExcludeDrives = @()
+$ExcludeDrives += $(($env:SystemDrive) -replace(":",""))
+$ExcludeDrives += $VHDXDrive1.DriveLetter
+$ExcludeDrives += $VHDXDrive3.DriveLetter
+#$ExcludeDrives += $(Get-Volume | Where-Object {$_.drivetype -eq 'CD-ROM'}).DriveLetter
+
+$Drives = Get-Volume | Where {$_.DriveLetter -notin $ExcludeDrives -and $_.DriveLetter -ne $null}
+$FoundImages = $Drives | foreach { (Get-ChildItem -Path "$($_.DriveLetter):\" -Recurse -filter "install.wim" -ErrorAction SilentlyContinue).fullname } | Where-Object { $_ }
     
 
-    if ($FoundImages.GetType().IsArray) {
+if ($FoundImages.GetType().IsArray) {
 
-        $Images = @()
-        Foreach ($Image in $FoundImages) {
+    $Images = @()
+    Foreach ($Image in $FoundImages) {
 
-            $ImageInfo = Get-WindowsImage -ImagePath $Image | Select-Object -Property ImageIndex, ImageName
-            $ImageData = $ImageInfo | % { [PSCustomObject]@{ Name = $_.ImageName;  Index = $_.ImageIndex; Path = $Image } }
-            $Images += $ImageData
+        $ImageInfo = Get-WindowsImage -ImagePath $Image | Select-Object -Property ImageIndex, ImageName
+        $ImageData = $ImageInfo | % { [PSCustomObject]@{ Name = $_.ImageName;  Index = $_.ImageIndex; Path = $Image } }
+        $Images += $ImageData
 
-        }
-        $SelectedImage = $Images | Out-GridView -OutputMode Single
-
-    } else {
-        $ImageInfo = Get-WindowsImage -ImagePath $FoundImages | Select-Object -Property ImageIndex, ImageName | Out-GridView -OutputMode Single
-        $SelectedImage = $ImageInfo | % { [PSCustomObject]@{ Name = $_.ImageName;  Index = $_.ImageIndex; Path = $FoundImages } }
     }
+    $SelectedImage = $Images | Out-GridView -OutputMode Single
+
+} else {
+    $ImageInfo = Get-WindowsImage -ImagePath $FoundImages | Select-Object -Property ImageIndex, ImageName | Out-GridView -OutputMode Single
+    $SelectedImage = $ImageInfo | % { [PSCustomObject]@{ Name = $_.ImageName;  Index = $_.ImageIndex; Path = $FoundImages } }
+}
 
 
-    # Expand Selected Server Image
-    # ------------------------------------------------------------
-    Expand-WindowsImage -ImagePath $SelectedImage.Path -Index $SelectedImage.Index -ApplyPath "$VHDXVolume3\" | Out-Null
+# Expand Selected Server Image
+# ------------------------------------------------------------
+Expand-WindowsImage -ImagePath $SelectedImage.Path -Index $SelectedImage.Index -ApplyPath "$VHDXVolume3\" | Out-Null
 
 
-    # Make boot files.
-    # ------------------------------------------------------------
-    & "$VHDXVolume3\Windows\system32\bcdboot.exe" "$VHDXVolume3\Windows" /s "$VHDXVolume1" /f UEFI | Out-Null
+# Make boot files.
+# ------------------------------------------------------------
+& "$VHDXVolume3\Windows\system32\bcdboot.exe" "$VHDXVolume3\Windows" /s "$VHDXVolume1" /f UEFI | Out-Null
 
 
-    # Find all Server 2025 drivers on all Media drives.
-    # ------------------------------------------------------------
-    $DriverSource = "$($ENV:TEMP)\Drivers"
-    if (-Not(Test-Path -Path $DriverSource)) {
-        New-Item -Path $DriverSource -ItemType Directory | Out-Null
-    } else {
-        Remove-Item -Path "$DriverSource\*" -Recurse -Force
-    }
-    Export-WindowsDriver -Online -Destination $DriverSource | Out-Null
+# Find all Server 2025 drivers on all Media drives.
+# ------------------------------------------------------------
+$DriverSource = "$($ENV:TEMP)\Drivers"
+if (-Not(Test-Path -Path $DriverSource)) {
+    New-Item -Path $DriverSource -ItemType Directory | Out-Null
+} else {
+    Remove-Item -Path "$DriverSource\*" -Recurse -Force
+}
+Export-WindowsDriver -Online -Destination $DriverSource | Out-Null
 
 
-    # Add Drivers
-    # ------------------------------------------------------------
-    $FoundDrivers = Get-ChildItem -Path $DriverSource -Recurse | Where {$_.Name -like "*inf"}
-    $FoundDrivers | foreach { Add-WindowsDriver -Path "$VHDXVolume3" -Driver $_.FullName } | Out-Null
+# Add Drivers
+# ------------------------------------------------------------
+$Drivers = Get-ChildItem -Path $DriverSource -Recurse | Where {$_.Name -like "*inf"}
+$Drivers | foreach { Add-WindowsDriver -Path "$VHDXVolume3" -Driver $_.FullName } | Out-Null
 
 
-    # Add Default Unattend
-    # ------------------------------------------------------------
-    if (!(Test-Path -Path "$VHDXVolume3\Windows\Panther")) {
-        New-Item -Path "$VHDXVolume3\Windows\Panther" -ItemType Directory | Out-Null
-    }
+# Add Default Unattend
+# ------------------------------------------------------------
+if (!(Test-Path -Path "$VHDXVolume3\Windows\Panther")) {
+    New-Item -Path "$VHDXVolume3\Windows\Panther" -ItemType Directory | Out-Null
+}
 
 
-    # Encode the FirstLogonCommands !
-    # ------------------------------------------------------------
-    $EncodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("& `"C:\Scripts\FirstBoot.ps1`""))
+# Encode the FirstLogonCommands !
+# ------------------------------------------------------------
+$EncodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("& `"C:\Scripts\FirstBoot.ps1`""))
 
 
-    # Create Default Unattended
-    # ------------------------------------------------------------
-    New-Unattend -ComputerName "*" -FirstLogonCommands @(
-            [PSCustomObject]@{ Name = "FirstBoot";  Command = "PowerShell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $EncodedCommand" }
-        ) | Out-File -FilePath "$VHDXVolume3\Windows\Panther\unattend.xml" -Encoding utf8
-    #notepad "$VHDXVolume3\Windows\Panther\unattend.xml"
-    [XML]$Unattended = Get-Content -Path "$VHDXVolume3\Windows\Panther\unattend.xml"
-    #(($Unattended.unattend.settings| ? {$_.pass -eq "oobeSystem"}).component | Where {$_.Name -like "*Setup"}).AutoLogon | Select-Object Username,@{Label="Password"; Expression={$_.password.Value}}
+# Create Default Unattended
+# ------------------------------------------------------------
+New-Unattend -ComputerName "*" -FirstLogonCommands @(
+        [PSCustomObject]@{ Name = "FirstBoot";  Command = "PowerShell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $EncodedCommand" }
+    ) | Out-File -FilePath "$VHDXVolume3\Windows\Panther\unattend.xml" -Encoding utf8
+#notepad "$VHDXVolume3\Windows\Panther\unattend.xml"
+[XML]$Unattended = Get-Content -Path "$VHDXVolume3\Windows\Panther\unattend.xml"
+#(($Unattended.unattend.settings| ? {$_.pass -eq "oobeSystem"}).component | Where {$_.Name -like "*Setup"}).AutoLogon | Select-Object Username,@{Label="Password"; Expression={$_.password.Value}}
 
-    $AutoLogon = (($Unattended.unattend.settings| ? {$_.pass -eq "oobeSystem"}).component | Where {$_.Name -like "*Setup"}).AutoLogon
+$AutoLogon = (($Unattended.unattend.settings| ? {$_.pass -eq "oobeSystem"}).component | Where {$_.Name -like "*Setup"}).AutoLogon
 
-    Write-Output "-----------------------------------------------------------------"
-    Write-Output ""
-    Write-Output "Please thake note of default credentials, might be needed for debugging"
-    Write-Output ""
-    Write-Output "Default Username : $($AutoLogon.Username)"
-    Write-Output "Default Password : $($AutoLogon.Password.Value)"
-    Write-Output ""
-    Write-Output "-----------------------------------------------------------------"
+Write-Output "-----------------------------------------------------------------"
+Write-Output ""
+Write-Output "Please thake note of default credentials, might be needed for debugging"
+Write-Output ""
+Write-Output "Default Username : $($AutoLogon.Username)"
+Write-Output "Default Password : $($AutoLogon.Password.Value)"
+Write-Output ""
+Write-Output "-----------------------------------------------------------------"
    
 
-    # Add Bootstrap Script
-    # ------------------------------------------------------------
-    if (!(Test-Path -Path "$VHDXVolume3\Scripts")) {
-        New-Item -Path "$VHDXVolume3\Scripts" -ItemType Directory | Out-Null
-    }
+# Add Bootstrap Script
+# ------------------------------------------------------------
+if (!(Test-Path -Path "$VHDXVolume3\Scripts")) {
+    New-Item -Path "$VHDXVolume3\Scripts" -ItemType Directory | Out-Null
+}
 
-    Invoke-RestMethod -Uri "http://localhost/deployment/BuildScripts/Common/FirstBoot.ps1" -OutFile "$VHDXVolume3\Scripts\FirstBoot.ps1"
-    <#
-    ISE "$VHDXVolume3\Scripts\FirstBoot.ps1"
-    #>
-
-
-    # Save Local deployment information.
-    # ------------------------------------------------------------
-    $Interface = Get-NetAdapter -Physical | Where-Object {$_.Status -EQ "UP"}
-    $IPConfig = $Interface | Get-NetIPAddress -AddressFamily IPv4
-    $DNSData = Resolve-DnsName -Name $IPConfig.IPv4Address
-    $DeploymentSite = (Get-WebVirtualDirectory -ErrorAction SilentlyContinue | Select-Object -First 1).path -replace("/","")
-
-    [PSCustomObject]@{
-        ServerName  = "$($DNSData.NameHost)";
-        IpAddress   = "$($IPConfig.IPv4Address)";
-        VirtualPath = "$($DeploymentSite)";
-        Username    = "";
-        Password    = "";
-    } | ConvertTo-Json | Out-File "$VHDXVolume3\Scripts\DeploymentServer.json" -Encoding utf8
+Invoke-RestMethod -Uri "http://localhost/deployment/BuildScripts/Common/FirstBoot.ps1" -OutFile "$VHDXVolume3\Scripts\FirstBoot.ps1"
+<#
+ISE "$VHDXVolume3\Scripts\FirstBoot.ps1"
+#>
 
 
-    # Convert EVAL to Standard
-    # ------------------------------------------------------------
-    if ($SelectedImage.Name -like "*Eval*") {
-        dism /image:$VHDXVolume3 /set-edition:ServerStandard
-    }
+# Save Local deployment information.
+# ------------------------------------------------------------
+$Interface = Get-NetAdapter -Physical | Where-Object {$_.Status -EQ "UP"}
+$IPConfig = $Interface | Get-NetIPAddress -AddressFamily IPv4
+$DNSData = Resolve-DnsName -Name $IPConfig.IPv4Address
+$DeploymentSite = (Get-WebVirtualDirectory -ErrorAction SilentlyContinue | Select-Object -First 1).path -replace("/","")
+
+[PSCustomObject]@{
+    ServerName  = "$($DNSData.NameHost)";
+    IpAddress   = "$($IPConfig.IPv4Address)";
+    VirtualPath = "$($DeploymentSite)";
+    Username    = "";
+    Password    = "";
+} | ConvertTo-Json | Out-File "$VHDXVolume3\Scripts\DeploymentServer.json" -Encoding utf8
+
+
+# Convert EVAL to Standard
+# ------------------------------------------------------------
+if ($SelectedImage.Name -like "*Eval*") {
+    dism /image:$VHDXVolume3 /set-edition:ServerStandard
+}
     
 
-    # Offline disk
-    # ------------------------------------------------------------
-    Get-Disk $VHDDrive.number | Set-Disk -IsOffline $true
-
-}
+# Offline disk
+# ------------------------------------------------------------
+Get-Disk $VHDDrive.number | Set-Disk -IsOffline $true
 
 
 <#
@@ -316,12 +317,12 @@ if ($null -eq $VHDDrive) {
 # ------------------------------------------------------------
 $VMStatus = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Headers $PVEConnect.Headers -Verbose:$false).data
 $RemoveDrive = $VMStatus.PSObject.Properties | Where {$_.value -like "*$($ServerISO.volid)*"}
-$null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Body "delete=$($RemoveDrive.Name)&force" -Headers $PVEConnect.Headers -Method Post
+$RemoveMedia = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$($MasterID.VmID)/config" -Body "delete=$($RemoveDrive.Name)&force" -Headers $PVEConnect.Headers -Method Post
+Start-PVEWait -ProxmoxAPI $($PVEConnect.PVEAPI) -Headers $PVEConnect.Headers -node $($MasterID.Node) -taskid $RemoveMedia.data
 
 
 # Move Disk to template.
 # ------------------------------------------------------------
-#$OrgDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $MasterID.VmID -TargetVM $TemplateID -SourceDisk $TmpDiskID -Wait
 $OrgDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConnect.Headers -SourceNode $MasterID.Node -SourceVM $MasterID.VmID -TargetVM $TemplateID -SourceDisk $DiskId -Wait
 
 
@@ -329,7 +330,8 @@ $OrgDiskID = Reassign-PVEOwner -ProxmoxAPI $PVEConnect.PVEAPI -Headers $PVEConne
 # ------------------------------------------------------------
 $Body = "boot=$([uri]::EscapeDataString("order=$OrgDiskID"))"
 $body += "&name=$(($SelectedImage.Name -split(`" `"))[2,3] -join(`"-`"))"
-$null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$TemplateID/config" -Body $Body -Method POST -Headers $($PVEConnect.Headers)
+$UpdateBoot = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($MasterID.Node)/qemu/$TemplateID/config" -Body $Body -Method POST -Headers $($PVEConnect.Headers)
+Start-PVEWait -ProxmoxAPI $($PVEConnect.PVEAPI) -Headers $PVEConnect.Headers -node $($MasterID.Node) -taskid $UpdateBoot.data
 
 
 # Convert TO template
