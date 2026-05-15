@@ -61,6 +61,10 @@
                           "status":  "pending"
                       },
                       {
+                          "name":  "Custom/Active Directory/ADDS-AutoPromo.ps1",
+                          "status":  "pending"
+                      },
+                      {
                           "name":  "Common/Cleanup.ps1",
                           "status":  "pending"
                       }
