@@ -12,7 +12,7 @@ function Start-PVEWait {
         [Parameter(Mandatory)][string]$Taskid
     )
 
-    $TimeoutSeconds = 300
+    $TimeoutSeconds = 2000
     $StartTime = Get-Date
     $EndTime = $StartTime.AddSeconds($TimeoutSeconds)
 
