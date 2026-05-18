@@ -131,8 +131,8 @@ $CreateOUs | Sort-Object -Unique -Property Name | Foreach {
 
 # Get Data from Json Config
 # ------------------------------------------------------------
-If (Test-Path -Path "$PSScriptRoot\ServerConfig.json") {
-    $ServerConfig = Get-Content -Path "$PSScriptRoot\ServerConfig.json" | ConvertFrom-Json
+If (Test-Path -Path "$RootPath\ServerConfig.json") {
+    $ServerConfig = Get-Content -Path "$RootPath\ServerConfig.json" | ConvertFrom-Json
 }
 
 
