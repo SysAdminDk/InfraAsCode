@@ -14,7 +14,7 @@
 
 #>
 
-# Path to PVE scripts and Functions.
+# Define path to scripts and Functions.
 # ------------------------------------------------------------
 if ($PSScriptRoot -and $PSScriptRoot -ne "") {
     $RootPath = $PSScriptRoot

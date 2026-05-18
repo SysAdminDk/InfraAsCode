@@ -4,6 +4,15 @@
 
 #>
 
+# Define path to scripts and Functions.
+# ------------------------------------------------------------
+if ($PSScriptRoot -and $PSScriptRoot -ne "") {
+    $RootPath = $PSScriptRoot
+} else {
+    $RootPath  = "C:\Scripts"
+}
+
+
 # Ensure Windows Server Backup is installed
 # ------------------------------------------------------------
 if (!(Get-Command Start-WBBackup -ErrorAction SilentlyContinue)) {
@@ -42,8 +51,8 @@ if ($null -ne $Disk) {
 
 # Get Data from Json Config
 # ------------------------------------------------------------
-If (Test-Path -Path "$PSScriptRoot\ServerConfig.json") {
-    $ServerConfig = Get-Content -Path "$PSScriptRoot\ServerConfig.json" | ConvertFrom-Json
+If (Test-Path -Path "$RootPath\ServerConfig.json") {
+    $ServerConfig = Get-Content -Path "$RootPath\ServerConfig.json" | ConvertFrom-Json
 }
 
 
