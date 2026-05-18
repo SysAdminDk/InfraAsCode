@@ -11,8 +11,8 @@ $PromoScript = @"
 
 # Find any NEW servers to promote
 # ------------------------------------------------------------
-`$Server = Get-ADComputer -Filter "Name -like 'ADDS-0*'" | `
-    Where {`$_.DistinguishedName -Like "*OU=Quarantine*" -and `$_.adminDescription -eq `$null} | `
+`$Server = Get-ADComputer -Filter "Name -like 'ADDS-0*'" -Properties whenCreated | `
+    Where {`$_.DistinguishedName -Like "*OU=Quarantine*" -and `$_.adminDescription -eq `$null -and `$_.whenCreated -lt (Get-Date).AddMinutes(-10)} | `
         Select-Object -First 1
 
 
@@ -70,7 +70,7 @@ try {
         # Promote Domanin Controller
         # ------------------------------------------------------------
         `$SecurePassword = ConvertTo-SecureString -string `$Using:PWString -AsPlainText -Force
-        Install-ADDSDomainController -SafeModeAdministratorPassword `$SecurePassword -DomainName `$Using.NetBIOSName -InstallDNS -Credential `$Using:Credential -Force
+        Install-ADDSDomainController -SafeModeAdministratorPassword `$SecurePassword -DomainName `$Using:NetBIOSName -InstallDNS -Credential `$Using:Credential -Force
     }
 }
 catch {
