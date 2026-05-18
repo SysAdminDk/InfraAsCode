@@ -14,12 +14,21 @@
 
 #>
 
+# Path to PVE scripts and Functions.
+# ------------------------------------------------------------
+if ($PSScriptRoot -and $PSScriptRoot -ne "") {
+    $RootPath = $PSScriptRoot
+} else {
+    $RootPath  = "C:\Scripts"
+}
+
+
 # Install MSFT Baselines.
 # ------------------------------------------------------------
 $Uri = "https://api.github.com/repos/SysAdminDk/InfraTools/contents/Active%20Directory/Configure/Security%20Baselines/MSFT%20Baseline?ref=main"
 $Files = Invoke-RestMethod -Uri $Uri -Headers @{ "User-Agent" = "Powershell" }
 
-$Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$PSScriptRoot\$($_.Name)" }
+$Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$RootPath\$($_.Name)" }
 
 
 # Get MY Add WMI Filters script.
@@ -27,20 +36,20 @@ $Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$PSScriptRoot\$($_
 $Uri = "https://api.github.com/repos/SysAdminDk/InfraTools/contents/Active%20Directory/Configure/Security%20Baselines/WMI-Filters?ref=main"
 $Files = Invoke-RestMethod -Uri $Uri -Headers @{ "User-Agent" = "Powershell" }
 
-$Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$PSScriptRoot\$($_.Name)" }
+$Files | % { Invoke-WebRequest -Uri $_.download_url -OutFile "$RootPath\$($_.Name)" }
 
 
 # Get and install MSFT Baselines
 # ------------------------------------------------------------
-& "$PSScriptRoot\Import-MSFT-Baselines.ps1" -Path "$PSScriptRoot\Temp" -Action AutoInstall -OSVersions @("2022","2025") -Cleanup
-& "$PSScriptRoot\Create-Overrides.ps1"
-& "$PSScriptRoot\Update-MSFT-AuditPolicy.ps1"
+& "$RootPath\Import-MSFT-Baselines.ps1" -Path "$RootPath\Temp" -Action AutoInstall -OSVersions @("2022","2025") -Cleanup
+& "$RootPath\Create-Overrides.ps1"
+& "$RootPath\Update-MSFT-AuditPolicy.ps1"
 
 
 # Create WMI Filters
 # ------------------------------------------------------------
-& "$PSScriptRoot\Create-WMIfilters.ps1"
-& "$PSScriptRoot\Set-VMIFilters.ps1"
+& "$RootPath\Create-WMIfilters.ps1"
+& "$RootPath\Set-VMIFilters.ps1"
 
 
 # Link MSFT Domain Controller Baselines to Domain Controllers OU
@@ -75,9 +84,9 @@ if (-NOT (Get-GPO -Name "MSFT - DISABLE Windows LAPS" -ErrorAction SilentlyConti
     # Create WMI Filter.
     # ------------------------------------------------------------
     "Detect Running Deployment; SELECT * From CIM_Datafile WHERE Name = `"C:\\Windows\\Panther\\unattend.xml`"" | `
-        Out-File "$PSScriptRoot\WMI Query.txt" -Encoding utf8 -Append
+        Out-File "$RootPath\WMI Query.txt" -Encoding utf8 -Append
 
-    & "$PSScriptRoot\Create-WMIfilters.ps1"
+    & "$RootPath\Create-WMIfilters.ps1"
 
 
     # Set WMI Filter
@@ -110,8 +119,8 @@ if (-NOT (Get-GPO -Name "MSFT - DISABLE Windows LAPS" -ErrorAction SilentlyConti
 
 # Get Data from Json Config
 # ------------------------------------------------------------
-If (Test-Path -Path "$PSScriptRoot\ServerConfig.json") {
-    $ServerConfig = Get-Content -Path "$PSScriptRoot\ServerConfig.json" | ConvertFrom-Json
+If (Test-Path -Path "$RootPath\ServerConfig.json") {
+    $ServerConfig = Get-Content -Path "$RootPath\ServerConfig.json" | ConvertFrom-Json
 }
 
 
