@@ -82,7 +82,7 @@ catch {
 if (`$Promoted) {
     # Clear Admin Description
     # ------------------------------------------------------------
-    Set-ADComputer -Identity `$Server -Clear adminDescription
+    Get-ADComputer -Identity `$Server.Name | Set-ADComputer -Clear adminDescription
 
 
     # Disable DcPromoUser
