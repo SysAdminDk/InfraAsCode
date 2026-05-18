@@ -167,11 +167,12 @@ Add-ADGroupMember -Identity "Delegate Control - Join Computers" -Members $Server
 
 $ADGroup = Get-ADGroup -Identity "Delegate Control - Join Computers"
 
-@((Get-ADOrganizationalUnit -Filter "name -eq 'ComputerQuarantine'").DistinguishedName
+@((Get-ADDomain).ComputersContainer
     (Get-ADOrganizationalUnit -Filter "name -eq 'JumpStationsLimited'").DistinguishedName
     (Get-ADOrganizationalUnit -Filter "name -eq 'JumpStations'").DistinguishedName
     (Get-ADOrganizationalUnit -Filter "name -eq 'Servers'").DistinguishedName
 ) | Foreach { Set-TSxOUPermission -OrganizationalUnitDN $_ -GroupName $ADGroup.Name -ObjectType ComputersCreate }
+
 
 
 # Change Task to Completed
