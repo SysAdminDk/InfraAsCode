@@ -123,5 +123,5 @@ Function Prompt-YesNo {
 switch(Prompt-YesNo -Title "Create Servers" -Message "Execute the Create-PVEServers script ?")
 {
 	0 { }
-	1 { & "$RootPath\Create-PVEServers.ps1" }
+	1 { & "$RootPath\Tools\Create-PVEVMs.ps1" }
 }
