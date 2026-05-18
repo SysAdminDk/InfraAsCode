@@ -11,7 +11,7 @@ $PromoScript = @"
 
 # Find any NEW servers to promote
 # ------------------------------------------------------------
-`$Server = Get-ADComputer -Filter "Name -like 'ADDS-0*'" -Properties adminDescription | `
+`$Server = Get-ADComputer -Filter "Name -like 'ADDS-0*'" | `
     Where {`$_.DistinguishedName -Like "*OU=Quarantine*" -and `$_.adminDescription -eq `$null} | `
         Select-Object -First 1
 
@@ -65,7 +65,7 @@ Set-ADComputer -Identity `$Server -Replace @{ adminDescription = "Promoting:`$(G
 try {
     # Connect to server and run DC Promo
     # ------------------------------------------------------------
-    Invoke-Command -ComputerName `$Server.DNSHostName -ScriptBlock {
+    `$Promoted = Invoke-Command -ComputerName `$Server.DNSHostName -ScriptBlock {
     
         # Promote Domanin Controller
         # ------------------------------------------------------------
@@ -74,9 +74,12 @@ try {
     }
 }
 catch {
-    # 
+    # Update Description with failure
+    # ------------------------------------------------------------
+    Set-ADComputer -Identity `$Server -Replace @{ adminDescription = "Failed:`$(Get-Date -Format s)" }
 }
-finally {
+
+if (`$Promoted) {
     # Clear Admin Description
     # ------------------------------------------------------------
     Set-ADComputer -Identity `$Server -Clear adminDescription
