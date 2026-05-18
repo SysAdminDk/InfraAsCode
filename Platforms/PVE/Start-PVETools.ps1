@@ -2,11 +2,11 @@
 # ------------------------------------------------------------
 Add-Type -AssemblyName System.Windows.Forms
 
-$Form = New-Object System.Windows.Forms.Form
 if (-NOT($psISE)) {
     [System.Windows.Forms.Application]::EnableVisualStyles()
     [System.Windows.Forms.Application]::SetCompatibleTextRenderingDefault($false)
 }
+$Form = New-Object System.Windows.Forms.Form
 $Form.Text = "PVE Script Launcher"
 $form.Font = New-Object System.Drawing.Font("Tahoma", 9)
 $Form.UseWaitCursor = $false
