@@ -14,15 +14,6 @@
 #>
 
 
-# Path to PVE scripts and Functions.
-# ------------------------------------------------------------
-if ($PSScriptRoot -and $PSScriptRoot -ne "") {
-    $RootPath = $PSScriptRoot
-} else {
-    $RootPath  = "C:\Scripts"
-}
-
-
 # Clear Autologin
 # ------------------------------------------------------------
 $Winlogon = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
