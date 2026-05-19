@@ -13,15 +13,6 @@
 
 #>
 
-# Define path to scripts and Functions.
-# ------------------------------------------------------------
-if ($PSScriptRoot -and $PSScriptRoot -ne "") {
-    $RootPath = $PSScriptRoot
-} else {
-    $RootPath  = "C:\Scripts"
-}
-
-
 # Clear Autologin
 # ------------------------------------------------------------
 $Winlogon = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
@@ -47,18 +38,3 @@ Remove-Item "$($env:windir)\Panther\Unattend.xml" -Force
 # Run GPUpdate (Get LAPS PW rotated)
 # ------------------------------------------------------------
 Gpupdate /Target:Computer /Force
-
-
-# Get Data from Json Config
-# ------------------------------------------------------------
-If (Test-Path -Path "$RootPath\ServerConfig.json") {
-    $ServerConfig = Get-Content -Path "$RootPath\ServerConfig.json" | ConvertFrom-Json
-}
-
-
-# Change Task to Completed
-# ------------------------------------------------------------
-if ($ServerConfig) {
-    ($ServerConfig.Tasks | Where-Object { $_.Name -like "*$(Split-Path $PSCommandPath -Leaf)" }).status = "Completed"
-    $ServerConfig | ConvertTo-Json -Depth 5 | Out-File -FilePath "$RootPath\ServerConfig.json" -Encoding utf8 -Force
-}
