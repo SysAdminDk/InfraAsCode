@@ -3,4 +3,5 @@
 **/SubscriptionData.json
 **/GitHub-Connection.json
 ConfigFiles/JSON/*.json
+ConfigFiles/Master-Json/*.json
 **/[Tt]est*/
