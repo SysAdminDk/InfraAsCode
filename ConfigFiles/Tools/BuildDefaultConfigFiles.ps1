@@ -101,7 +101,8 @@ $Domains = @{
             $_ -eq "AMFA-02" -or
             $_ -eq "MGMT-11" -or
             $_ -eq "MGMT-12" -or
-            $_ -eq "FILE-01"
+            $_ -eq "FILE-01" -or
+            $_ -like "*NODE*"
         }
         "Defaults" = [PSCustomObject]@{
                 DomainName="Fabric.SecInfra.Dk";
