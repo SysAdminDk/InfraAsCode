@@ -76,9 +76,9 @@ $Domains = @{
         "Servers" = $MasterConfig.name | Where {
             $_ -eq "ADDS-01" -or
             $_ -eq "ADDS-02" -or
-            $_ -eq "MGMT-01" -or
+            $_ -eq "MGMT-P01" -or
             $_ -eq "RDGW-01" -or
-            $_ -eq "MGMT-11"
+            $_ -eq "MGMT-S11"
         }
         "Defaults" = [PSCustomObject]@{
                 DomainName="Dev.SecInfra.Dk";
@@ -91,16 +91,16 @@ $Domains = @{
         "Servers" = $MasterConfig.name | Where {
             $_ -eq "ADDS-01" -or
             $_ -eq "ADDS-02" -or
-            $_ -eq "MGMT-01" -or
-            $_ -eq "MGMT-02" -or
+            $_ -eq "MGMT-P01" -or
+            $_ -eq "MGMT-P02" -or
             $_ -eq "RDGW-01" -or
             $_ -eq "RDGW-02" -or
-            $_ -eq "NPAS-01" -or
-            $_ -eq "NPAS-02" -or
-            $_ -eq "AMFA-01" -or
-            $_ -eq "AMFA-02" -or
-            $_ -eq "MGMT-11" -or
-            $_ -eq "MGMT-12" -or
+            $_ -eq "HYAU-01" -or
+            $_ -eq "HYAU-02" -or
+            $_ -eq "NETA-01" -or
+            $_ -eq "NETA-02" -or
+            $_ -eq "MGMT-S11" -or
+            $_ -eq "MGMT-S12" -or
             $_ -eq "FILE-01" -or
             $_ -like "*NODE*"
         }
