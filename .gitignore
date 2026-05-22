@@ -2,6 +2,7 @@
 **/Proxmox-Connection.json
 **/SubscriptionData.json
 **/GitHub-Connection.json
+**/ADTiering.zip
 ConfigFiles/JSON/*.json
 ConfigFiles/Master-Json/*.json
 **/[Tt]est*/
