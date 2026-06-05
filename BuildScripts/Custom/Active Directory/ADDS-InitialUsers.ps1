@@ -72,7 +72,7 @@ ForEach ($User in $UserList) {
         $CreatedUsers += New-TSxAdminAccount -FirstName $User.FirstName -LastName $User.LastName -AccountType $($_) -AddToSilo $Silo -ErrorAction SilentlyContinue
     }
     if ($User.type -eq "EXT") {
-        $CreatedUsers += New-TSxAdminAccount -FirstName $User.FirstName -LastName $User.LastName -AccountType CON -AddToSilo $false
+        $CreatedUsers += New-TSxAdminAccount -FirstName $User.FirstName -LastName $User.LastName -AccountType CON -AddToSilo $false -ErrorAction SilentlyContinue
     }
 }
 
