@@ -44,90 +44,66 @@ if (-not (Test-NetConnection $DeploymentServer -CommonTCPPort HTTP -InformationL
 }
 
 
-# Wait until AD Tiering file is copied.
+# Create Tier 0 structure
 # ------------------------------------------------------------
-if (-NOT (Test-Path -Path "$RootPath\ADTiering.zip")) {
-    Write-Output "Please copy the Truesec Active Directory Tiering file to $RootPath"
-    for ($i=0; $i -lt 9999; $i++) {
-        if (Test-Path -Path "$RootPath\ADTiering.zip") {
-            break
-        } else {
-            Start-Sleep -Seconds 30
-        }
-    }
+$DomainInfo = Get-ADDomain
+
+
+# Create Root OUs
+# ------------------------------------------------------------
+New-ADOrganizationalUnit -Name "CAF-Principals" -Path $($DomainInfo.DistinguishedName)
+New-ADOrganizationalUnit -Name "CAF-Platform" -Path $($DomainInfo.DistinguishedName)
+New-ADOrganizationalUnit -Name "CAF-Workloads" -Path $($DomainInfo.DistinguishedName)
+New-ADOrganizationalUnit -Name "HybridEndpoints" -Path $($DomainInfo.DistinguishedName)
+
+
+# Create Principals OUs
+# ------------------------------------------------------------
+@("ManagedAccounts","ManagedGroups","ServiceAccounts","LocalGroups","ConnectionAccounts") | % {
+    New-ADOrganizationalUnit -Name $($_) -Path "OU=CAF-Principals,$($DomainInfo.DistinguishedName)"
 }
 
 
-# Extract Tiering Package
+# Create Platform OUs
 # ------------------------------------------------------------
-Expand-Archive -Path "$RootPath\ADTiering.zip" -DestinationPath $RootPath -Force
+@("Security","Management","Identity","Connectivity") | % {
+    New-ADOrganizationalUnit -Name $($_) -Path "OU=CAF-Platform,$($DomainInfo.DistinguishedName)"
+}
 
+@("CloudSync","PasswordProtection","EntraConnect","CertificateAuthority") | % {
+    New-ADOrganizationalUnit -Name $($_) -Path "OU=Identity,OU=CAF-Platform,$($DomainInfo.DistinguishedName)"
+}
 
-# Find the AD Tiering Scripts
-# ------------------------------------------------------------
-$ADTieringScript = Get-ChildItem -Path $RootPath -Recurse -Include "Deploy-TSxADTiering.ps1"
-
-
-# Setup TS AD Tiering
-# ------------------------------------------------------------
-Remove-Item -Path (Get-ChildItem -Path $($ADTieringScript.Directory.FullName) -Filter "*.csv").fullname
-
-& $($ADTieringScript.FullName) -CompanyName "$((Get-ADDomain).Name) Endpoints" -TierOUName "Admin" -NoOfTiers 1 -SkipTierEndpointsPAW -SkipTierEndpoints -SkipComputerRedirect -WindowsLAPSOnly
-#    & $($ADTieringScript.FullName) -CompanyName "$((Get-ADDomain).Name) Endpoints" -TierOUName "Admin" -NoOfTiers 2 -WindowsLAPSOnly
-
-
-# Import TS Tiering Module
-# ------------------------------------------------------------
-Import-Module (Get-ChildItem -Path $PSScriptRoot -Recurse -Filter "TSxTieringModule.psm1").FullName -Force
-
-
-# List all OrganizationalUnits used in Domain JSON files.
-# ------------------------------------------------------------
-$DomainInfo = $(Get-ADDomain)
-
-$MACFilter = @("00", "00") + ((((Get-NetAdapter | Where {$_.Status -eq "UP"} | Select-Object -First 1).MacAddress) -Split("-"))[2..4]) -Join("-")
-
-$URL = "$RepoUrl/ConfigFiles/JSON"
-
-$FLResponse = Invoke-WebRequest -Uri $URL -ErrorAction Stop -UseBasicParsing
-$GitJsonFiles = ($FLResponse.Links.href | Where {$_ -like "*$MACFilter*"}) -replace("/$($Deployment.VirtualPath)","")
-
-$CreateOUs = New-Object System.Collections.ArrayList
-$CreateServers = New-Object System.Collections.ArrayList
-
-$GitJsonFiles | Foreach {
-
-    Invoke-WebRequest -Uri "$RepoUrl/$($_)" -UseBasicParsing -OutFile "$($ENV:TEMP)\JsonConvert.json"
-    $ServerData = Get-Content -Path "$($ENV:TEMP)\JsonConvert.json" -Raw -Encoding UTF8 | ConvertFrom-Json
-
-    if ($ServerData.JoinOptions.OrganizationalUnit) {
-        $OrganizationalUnit = @($($ServerData.JoinOptions.OrganizationalUnit), $($DomainInfo.DistinguishedName)) -join(",")
-        $CreateServers += [PSCustomObject]@{ Name = $($ServerData.name); Path = $OrganizationalUnit }
-            
-        try {
-            $OUTest = Get-ADOrganizationalUnit -Identity $OrganizationalUnit
-        }
-        Catch {
-
-            $OUParts = $OrganizationalUnit -split(",")
-
-            $OUName = $OUParts[0] -replace '^OU='
-
-            $AdminOUIndex = $OUParts.IndexOf('OU=Admin')
-            if ($AdminOUIndex -gt 0) { $OUTier = $OUParts[$AdminOUIndex - 1] -replace '^OU=' }
-
-            $CreateOUs += $([PSCustomObject]@{ Name = $OUName; Tier = $OUTier })
-        }
-    }
+@("CloudSync","PasswordProtection","EntraConnect","CertificateAuthority") | % {
+    New-ADOrganizationalUnit -Name $($_) -Path "OU=Identity,OU=CAF-Platform,$($DomainInfo.DistinguishedName)"
 }
 
 
-# Create all OUs listed in Domain JSON files.
+
+# Create Landing Zone OUs
 # ------------------------------------------------------------
-$CreateOUs | Sort-Object -Unique -Property Name | Foreach {
-    New-TSxSubOU -Tier $_.Tier -Name $_.Name -Description "$($_Tier) $($_.Name)" -TierOUName "Admin" -CompanyName "Dev Endpoints" -WindowsLAPSOnly -Cleanup
+@("Corp","Online","Local") | % {
+    New-ADOrganizationalUnit -Name $($_) -Path "OU=Landing Zones,$($DomainInfo.DistinguishedName)"
 }
-    
+
+
+# Create Identity OUs
+# ------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Get Data from Json Config
 # ------------------------------------------------------------
